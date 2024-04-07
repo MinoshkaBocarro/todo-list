@@ -1,0 +1,1 @@
+{"version":3,"file":"main.js","mappings":"AAAAA,QAAQC,IAAI","sources":["webpack://todo-list/./src/index.js"],"sourcesContent":["console.log(\"Check\")"],"names":["console","log"],"sourceRoot":""}
