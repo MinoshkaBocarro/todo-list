@@ -18,3 +18,22 @@ class Project {
         this.itemList.push(item);
     }
 }
+
+const projectList = (function() {
+    const projectList = [];
+    let currentProject;
+
+    const addProject = function(newProject) {
+        projectList.push(newProject);
+    }
+
+    const getCurrentProject = function() {
+        return currentProject;
+    }
+
+    const setCurrentProject = function(currentProjectIndex) {
+        currentProject = projectList[currentProjectIndex];
+    }
+
+    return { getCurrentProject, setCurrentProject, addProject };
+})();
