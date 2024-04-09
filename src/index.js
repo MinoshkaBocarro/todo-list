@@ -37,3 +37,16 @@ const projectList = (function() {
 
     return { getCurrentProject, setCurrentProject, addProject };
 })();
+
+
+function todoCreator(todoInfo) {
+    const currentProject = projectList.getCurrentProject();
+    // ^ this could be passed in
+    const newTodoItem = new TodoItem(todoInfo)
+    currentProject.addItem(newTodoItem);
+}
+
+function projectCreator(projectName) {
+    const newProject = new Project(projectName);
+    projectList.addProject(newProject);
+}
