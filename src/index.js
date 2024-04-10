@@ -1,3 +1,5 @@
+const { compareAsc } = require("date-fns");
+
 class TodoItem {
     constructor(todoInfo) {
         this.populateTodoItem(todoInfo);
@@ -6,9 +8,8 @@ class TodoItem {
     populateTodoItem({title, description, dueDate}) {
         this.title = title;
         this.description = description;
-        this.dueDate = dueDate;
+        this.dueDate = new Date(dueDate);
         // add priority, repeated, notes and checklist
-        // check if this works for info I want a setter foe e.g duedate
     }
 }
 
@@ -44,6 +45,8 @@ class Project {
                 }
                 return 0;
             });
+        } else if (sortMethod === "Due date") {
+            this.itemList.sort((firstTodo, secondTodo) => compareAsc(firstTodo.dueDate, secondTodo.dueDate));
         }
     }
 }
@@ -66,7 +69,6 @@ const projectList = (function() {
 
     return { getCurrentProject, setCurrentProject, addProject, projectList };
 })();
-
 
 function todoCreator(currentProject, todoInfo) {
     const newTodoItem = new TodoItem(todoInfo);
