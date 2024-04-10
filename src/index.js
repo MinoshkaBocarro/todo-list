@@ -15,6 +15,7 @@ class TodoItem {
 
 class Project {
     itemList = [];
+    completedList = [];
 
     constructor(projectName){
         this.projectName = projectName;
@@ -54,6 +55,12 @@ class Project {
         const item = this.getItem(originalIndex)
         this.itemList.splice(originalIndex, 1);
         this.itemList.splice(newIndex, 0, item);
+    }
+
+    completeItem(itemIndex) {
+        const item = this.getItem(itemIndex)
+        this.itemList.splice(itemIndex, 1);
+        this.completedList.push(item);
     }
 }
 
@@ -108,3 +115,27 @@ function moveIntoProject(currentProject, itemIndex, destinationProjectIndex) {
    const destinationProject = projectList.projectList[destinationProjectIndex];
    destinationProject.addItem(itemToBeMoved);
 }
+
+const todoItemInfo = {title: "Todo Title", description: "Todo Description", dueDate: "Todo Due Date"};
+const newProjectName = "New Project Name"
+projectCreator(newProjectName);
+projectList.setCurrentProject(0);
+let currentProject = projectList.getCurrentProject();
+todoCreator(currentProject, todoItemInfo);
+projectEditor(currentProject, "Working Title")
+const todoItemEdit = {title: "Totle", description: "Totion", dueDate: "Toe Date"};
+todoEditor(currentProject, todoItemEdit, 0)
+projectCreator("Destination")
+moveIntoProject(currentProject, 0, 1)
+todoCreator(currentProject, {title: "quarrel", description: "Todo Description", dueDate: '2024-01-01'})
+todoCreator(currentProject, {title: "Jovial", description: "Todo Description", dueDate: '2023-01-01'})
+todoCreator(currentProject, {title: "Jo Not", description: "Todo Description", dueDate: '2024-07-11'})
+todoCreator(currentProject, {title: "Yanty", description: "Todo Description", dueDate: '2023-08-09'})
+todoCreator(currentProject, {title: "Quarrel", description: "Todo Description", dueDate: '2024-07-11'})
+todoCreator(currentProject, {title: "boris", description: "Todo Description", dueDate: '2023-08-01'})
+currentProject.manualSort(3, 0);
+projectList.sortProjects(1, 0)
+console.log(projectList.projectList)
+currentProject.completeItem(0)
+console.log(projectList.projectList)
+"stop"
