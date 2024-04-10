@@ -26,6 +26,10 @@ class Project {
     getItem(itemIndex) {
         return this.itemList[itemIndex];
     }
+
+    deleteItem(itemIndex) {
+        this.itemList.splice(itemIndex, 1);
+    }
 }
 
 const projectList = (function() {
@@ -65,4 +69,5 @@ function todoEditor(currentProject, todoInfo, todoItemIndex) {
 }
 
 function projectEditor(currentProject, newProjectName) {
-    currentProject.projectName = newProjectName;}
+    currentProject.projectName = newProjectName;
+}
