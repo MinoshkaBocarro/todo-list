@@ -32,7 +32,7 @@ class Project {
         this.itemList.splice(itemIndex, 1);
     }
 
-    sortby(sortMethod) {
+    sortBy(sortMethod) {
         if (sortMethod === "Alphabetical") {
             this.itemList.sort((firstTodo, secondTodo) => {
                 const firstTitle = firstTodo.title.toUpperCase();
@@ -48,6 +48,12 @@ class Project {
         } else if (sortMethod === "Due date") {
             this.itemList.sort((firstTodo, secondTodo) => compareAsc(firstTodo.dueDate, secondTodo.dueDate));
         }
+    }
+
+    manualSort(originalIndex, newIndex) {
+        const item = this.getItem(originalIndex)
+        this.itemList.splice(originalIndex, 1);
+        this.itemList.splice(newIndex, 0, item);
     }
 }
 
