@@ -1,9 +1,14 @@
 class TodoItem {
-    constructor({title, description, dueDate}) {
+    constructor(todoInfo) {
+        this.populateTodoItem(todoInfo);
+    }
+
+    populateTodoItem({title, description, dueDate}) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         // add priority, repeated, notes and checklist
+        // check if this works for info I want a setter foe e.g duedate
     }
 }
 
@@ -16,6 +21,10 @@ class Project {
 
     addItem(item) {
         this.itemList.push(item);
+    }
+
+    getItem(itemIndex) {
+        return this.itemList[itemIndex];
     }
 }
 
