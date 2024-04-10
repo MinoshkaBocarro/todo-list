@@ -30,6 +30,22 @@ class Project {
     deleteItem(itemIndex) {
         this.itemList.splice(itemIndex, 1);
     }
+
+    sortby(sortMethod) {
+        if (sortMethod === "Alphabetical") {
+            this.itemList.sort((firstTodo, secondTodo) => {
+                const firstTitle = firstTodo.title.toUpperCase();
+                const secondTitle = secondTodo.title.toUpperCase();
+                if (firstTitle < secondTitle) {
+                    return -1;
+                }
+                if (firstTitle > secondTitle) {
+                    return 1;
+                }
+                return 0;
+            });
+        }
+    }
 }
 
 const projectList = (function() {
@@ -38,15 +54,15 @@ const projectList = (function() {
 
     const addProject = function(newProject) {
         projectList.push(newProject);
-    }
+    };
 
     const getCurrentProject = function() {
         return currentProject;
-    }
+    };
 
     const setCurrentProject = function(currentProjectIndex) {
         currentProject = projectList[currentProjectIndex];
-    }
+    };
 
     return { getCurrentProject, setCurrentProject, addProject, projectList };
 })();
