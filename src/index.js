@@ -48,10 +48,8 @@ const projectList = (function() {
 })();
 
 
-function todoCreator(todoInfo) {
-    const currentProject = projectList.getCurrentProject();
-    // ^ this could be passed in
-    const newTodoItem = new TodoItem(todoInfo)
+function todoCreator(currentProject, todoInfo) {
+    const newTodoItem = new TodoItem(todoInfo);
     currentProject.addItem(newTodoItem);
 }
 
@@ -59,3 +57,12 @@ function projectCreator(projectName) {
     const newProject = new Project(projectName);
     projectList.addProject(newProject);
 }
+
+function todoEditor(currentProject, todoInfo, todoItemIndex) {
+    const todoItem = currentProject.getItem(todoItemIndex);
+    todoItem.populateTodoItem(todoInfo);
+    //Do I expect to get the full todoInfo every time?
+}
+
+function projectEditor(currentProject, newProjectName) {
+    currentProject.projectName = newProjectName;}
