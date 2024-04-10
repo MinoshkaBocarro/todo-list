@@ -48,7 +48,7 @@ const projectList = (function() {
         currentProject = projectList[currentProjectIndex];
     }
 
-    return { getCurrentProject, setCurrentProject, addProject };
+    return { getCurrentProject, setCurrentProject, addProject, projectList };
 })();
 
 
@@ -70,4 +70,11 @@ function todoEditor(currentProject, todoInfo, todoItemIndex) {
 
 function projectEditor(currentProject, newProjectName) {
     currentProject.projectName = newProjectName;
+}
+
+function moveIntoProject(currentProject, itemIndex, destinationProjectIndex) {
+   const itemToBeMoved = currentProject.getItem(itemIndex);
+   currentProject.deleteItem(itemIndex);
+   const destinationProject = projectList.projectList[destinationProjectIndex];
+   destinationProject.addItem(itemToBeMoved);
 }
