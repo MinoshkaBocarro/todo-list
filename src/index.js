@@ -72,8 +72,14 @@ const projectList = (function() {
     const setCurrentProject = function(currentProjectIndex) {
         currentProject = projectList[currentProjectIndex];
     };
+    
+    const sortProjects = function(originalIndex, newIndex) {
+        const item = projectList[originalIndex];
+        projectList.splice(originalIndex, 1);
+        projectList.splice(newIndex, 0, item);
+    };
 
-    return { getCurrentProject, setCurrentProject, addProject, projectList };
+    return { getCurrentProject, setCurrentProject, addProject, projectList, sortProjects };
 })();
 
 function todoCreator(currentProject, todoInfo) {
