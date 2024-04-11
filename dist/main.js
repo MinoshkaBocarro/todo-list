@@ -1,2 +1,8 @@
-(()=>{class t{constructor(t){this.populateTodoItem(t)}populateTodoItem({title:t,description:e,dueDate:o}){this.title=t,this.description=e,this.dueDate=o}}class e{itemList=[];constructor(t){this.projectName=t}addItem(t){this.itemList.push(t)}getItem(t){return this.itemList[t]}}const o=function(){const t=[];let e;return{getCurrentProject:function(){return e},setCurrentProject:function(o){e=t[o]},addProject:function(e){t.push(e)},projectList:t}}();!function(t){const n=new e("New Project Name");o.addProject(n)}(),o.setCurrentProject(0);let n=o.getCurrentProject();!function(e,o){const n=new t({title:"Todo Title",description:"Todo Description",dueDate:"Todo Due Date"});e.addItem(n)}(n),console.log(o.getCurrentProject()),console.log(o.projectList),function(t,e){t.projectName="Working Title"}(n),console.log(o.projectList)})();
-//# sourceMappingURL=main.js.map
+/******/ (() => { // webpackBootstrap
+var __webpack_exports__ = {};
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+
+/******/ })()
+;
