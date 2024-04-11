@@ -1,0 +1,47 @@
+html {
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+    padding: 35px;
+}
+
+.container {
+    border: 2px pink solid;
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    min-height: calc(100vh - 70px);
+}
+
+nav {
+   display: flex; 
+   flex-direction: column;
+}
+
+.completed {
+    margin-top: auto;
+}
+
+article {
+    display: grid;
+    grid-template-rows: 1fr 4fr;
+    border: 1px solid black;
+}
+
+.project-heading {
+    display: flex;
+}
+
+article h1 {
+    display: inline-flex;
+}
+
+article button {
+    margin-left: auto;
+}
