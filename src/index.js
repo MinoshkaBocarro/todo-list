@@ -1,15 +1,45 @@
-const { compareAsc } = require("date-fns");
+const { compareAsc, isBefore, constructNow, addDays, format, addWeeks, addMonths, addYears } = require("date-fns");
 
 class TodoItem {
+    nextDueDate;
+
     constructor(todoInfo) {
         this.populateTodoItem(todoInfo);
     }
 
-    populateTodoItem({title, description, dueDate}) {
+    populateTodoItem({title, description, dueDate, repeated}) {
         this.title = title;
         this.description = description;
         this.dueDate = new Date(dueDate);
+        this.repeated = repeated;
         // add priority, repeated, notes and checklist
+    }
+
+    set repeated(repeats) {
+        if(typeof repeats === "undefined") {
+            return
+        } 
+        let dateToCompare;
+        let nextDueDate;
+        if (isBefore(this.dueDate, constructNow())) {
+            dateToCompare = constructNow();
+        } else {
+            dateToCompare = this.dueDate;
+        }
+        // ^ might not need this
+        if(repeats === "Daily") {
+            nextDueDate = addDays(dateToCompare, 2);
+        } else if (repeats === "Weekly") {
+            nextDueDate = addWeeks(dateToCompare, 1);
+        } else if (repeats === "Fortnightly") {
+            nextDueDate = addWeeks(dateToCompare, 2);
+        } else if (repeats === "Monthly") {
+            nextDueDate = addMonths(dateToCompare, 1);
+        } else if (repeats === "Yearly") {
+            nextDueDate = addYears(dateToCompare, 1);
+        }
+        this.nextDueDate = format(nextDueDate, 'yyyy-MM-dd')
+        return this._repeated = repeats;
     }
 }
 
@@ -115,27 +145,3 @@ function moveIntoProject(currentProject, itemIndex, destinationProjectIndex) {
    const destinationProject = projectList.projectList[destinationProjectIndex];
    destinationProject.addItem(itemToBeMoved);
 }
-
-const todoItemInfo = {title: "Todo Title", description: "Todo Description", dueDate: "Todo Due Date"};
-const newProjectName = "New Project Name"
-projectCreator(newProjectName);
-projectList.setCurrentProject(0);
-let currentProject = projectList.getCurrentProject();
-todoCreator(currentProject, todoItemInfo);
-projectEditor(currentProject, "Working Title")
-const todoItemEdit = {title: "Totle", description: "Totion", dueDate: "Toe Date"};
-todoEditor(currentProject, todoItemEdit, 0)
-projectCreator("Destination")
-moveIntoProject(currentProject, 0, 1)
-todoCreator(currentProject, {title: "quarrel", description: "Todo Description", dueDate: '2024-01-01'})
-todoCreator(currentProject, {title: "Jovial", description: "Todo Description", dueDate: '2023-01-01'})
-todoCreator(currentProject, {title: "Jo Not", description: "Todo Description", dueDate: '2024-07-11'})
-todoCreator(currentProject, {title: "Yanty", description: "Todo Description", dueDate: '2023-08-09'})
-todoCreator(currentProject, {title: "Quarrel", description: "Todo Description", dueDate: '2024-07-11'})
-todoCreator(currentProject, {title: "boris", description: "Todo Description", dueDate: '2023-08-01'})
-currentProject.manualSort(3, 0);
-projectList.sortProjects(1, 0)
-console.log(projectList.projectList)
-currentProject.completeItem(0)
-console.log(projectList.projectList)
-"stop"
