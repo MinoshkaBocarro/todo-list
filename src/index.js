@@ -7,12 +7,14 @@ class TodoItem {
         this.populateTodoItem(todoInfo);
     }
 
-    populateTodoItem({title, description, dueDate, repeated}) {
+    populateTodoItem({title, description, dueDate, priority, repeated, notes, checklist}) {
         this.title = title;
         this.description = description;
         this.dueDate = new Date(dueDate);
+        this.priority = priority || "low";
         this.repeated = repeated;
-        // add priority, repeated, notes and checklist
+        this.notes = notes;
+        this.checklist = checklist;
     }
 
     set repeated(repeats) {
