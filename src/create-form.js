@@ -72,3 +72,16 @@ createInput(label, "Notes:", "notes", "text", "FILL");
 createTextArea(label, "Checklist (each list item on a new line)", "checklist", "5", "33")
 
 form.append(ul);
+
+const cancelButton = document.createElement('button');
+cancelButton.setAttribute('value', 'cancel');
+cancelButton.setAttribute('class', 'cancel');
+cancelButton.textContent = "Go back"
+const confirmButton = document.createElement('button');
+confirmButton.setAttribute('value', 'confirm');
+confirmButton.setAttribute('class', 'confirm');
+confirmButton.textContent = "Done"
+
+form.append(cancelButton, confirmButton);
+
+export { form }
