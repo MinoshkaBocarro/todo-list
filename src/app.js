@@ -1,5 +1,11 @@
 import { projectList, Project, TodoItem } from "./app-components";
 
+function setDefault() {
+    projectCreator("To Do");
+    projectList.setCurrentProject(0);
+    return projectList.getCurrentProject();
+}
+
 function todoCreator(currentProject, todoInfo) {
     const newTodoItem = new TodoItem(todoInfo);
     currentProject.addItem(newTodoItem);
@@ -50,4 +56,4 @@ currentProject.completeItem(0)
 todoCreator(currentProject, {title: "boris", description: "Todo Description", dueDate: '2024-04-13', repeated: 'Yearly', priority: "high"})
 "stop"
 
-export { projectList }
+export { setDefault }
