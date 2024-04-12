@@ -10,7 +10,7 @@ class TodoItem {
     populateTodoItem({title, description, dueDate, priority, repeated, notes, checklist}) {
         this.title = title;
         this.description = description;
-        this.dueDate = new Date(dueDate);
+        this.dueDate = dueDate;
         this.priority = priority || "low";
         this.repeated = repeated;
         this.notes = notes;
@@ -61,6 +61,10 @@ class Project {
         return this.itemList[itemIndex];
     }
 
+    getItemList() {
+        return this.itemList;
+    }
+
     deleteItem(itemIndex) {
         this.itemList.splice(itemIndex, 1);
     }
@@ -108,6 +112,10 @@ const projectList = (function() {
         return currentProject;
     };
 
+    const getProjectList = function() {
+        return projectList;
+    };
+
     const setCurrentProject = function(currentProjectIndex) {
         currentProject = projectList[currentProjectIndex];
     };
@@ -118,7 +126,7 @@ const projectList = (function() {
         projectList.splice(newIndex, 0, item);
     };
 
-    return { getCurrentProject, setCurrentProject, addProject, projectList, sortProjects };
+    return { getCurrentProject, setCurrentProject, addProject, getProjectList, sortProjects };
 })();
 
 function todoCreator(currentProject, todoInfo) {
@@ -144,6 +152,31 @@ function projectEditor(currentProject, newProjectName) {
 function moveIntoProject(currentProject, itemIndex, destinationProjectIndex) {
    const itemToBeMoved = currentProject.getItem(itemIndex);
    currentProject.deleteItem(itemIndex);
-   const destinationProject = projectList.projectList[destinationProjectIndex];
+   const destinationProject = projectList.getProjectList()[destinationProjectIndex];
    destinationProject.addItem(itemToBeMoved);
 }
+
+const todoItemInfo = {title: "Todo Title", description: "Todo Description", dueDate: '2024-01-01'};
+const newProjectName = "New Project Name"
+projectCreator(newProjectName);
+projectList.setCurrentProject(0);
+let currentProject = projectList.getCurrentProject();
+todoCreator(currentProject, todoItemInfo);
+projectEditor(currentProject, "Working Title")
+const todoItemEdit = {title: "Totle", description: "Totion", dueDate: '2024-06-01'};
+todoEditor(currentProject, todoItemEdit, 0)
+projectCreator("Destination")
+moveIntoProject(currentProject, 0, 1)
+todoCreator(currentProject, {title: "quarrel", description: "Todo Description", dueDate: '2024-01-01'})
+todoCreator(currentProject, {title: "Jovial", description: "Todo Description", dueDate: '2023-01-01'})
+todoCreator(currentProject, {title: "Jo Not", description: "Todo Description", dueDate: '2024-07-11'})
+todoCreator(currentProject, {title: "Yanty", description: "Todo Description", dueDate: '2023-08-09'})
+todoCreator(currentProject, {title: "Quarrel", description: "Todo Description", dueDate: '2024-07-11'})
+todoCreator(currentProject, {title: "boris", description: "Todo Description", dueDate: '2023-08-01'})
+currentProject.manualSort(3, 0);
+projectList.sortProjects(1, 0)
+currentProject.completeItem(0)
+todoCreator(currentProject, {title: "boris", description: "Todo Description", dueDate: '2024-04-13', repeated: 'Yearly', priority: "high"})
+"stop"
+
+export { projectList }

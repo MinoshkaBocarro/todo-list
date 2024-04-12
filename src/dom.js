@@ -1,4 +1,5 @@
 import { form } from "./create-form";
+import { todoListContainer } from "./create-todo-list";
 
 const newTodoItemButton = document.querySelector('.project-heading > button')
 const todoArea = document.querySelector('.todo-area');
@@ -35,7 +36,7 @@ function renderTodoForm() {
 
 function renderTodoList() {
     clearTodoArea();
-    todoArea.append(blank);
+    todoArea.append(todoListContainer);
 }
 
 function clearTodoArea() {
