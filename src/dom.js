@@ -1,6 +1,6 @@
-import { setDefault } from "./app";
+import { setDefault, todoCreator } from "./app";
 import { form } from "./create-form";
-import { createTodoList, todoListContainer } from "./create-todo-list";
+import { createTodoList } from "./create-todo-list";
 
 let currentProject;
 
@@ -18,19 +18,52 @@ newTodoItemButton.addEventListener("click", () => {
 
     //check if these event listeners are working properly after form is closed
 
-    cancelButton.addEventListener("click", e => {
+    cancelButton.addEventListener("click", cancelButtonCallback /*e => {
         e.preventDefault();
         renderTodoList();
-        //double check if this name is correct
-        //should i get this to render?
-    })
+        form.reset();
+    }*/)
     
-    confirmButton.addEventListener("click", e => {
+    confirmButton.addEventListener("click", confirmButtonCallback /*e => {
         e.preventDefault();
         new FormData(form);
+        form.reset();
         renderTodoList();
-    })
+    }*/)
+
+    form.addEventListener("formdata", formdataCallback /*e => {
+        const data = e.formData;
+        const newTodoItemInfo = [];
+        for(let value of data.values()) {
+            newTodoItemInfo.push(value);
+        }
+        todoCreator(currentProject, ...newTodoItemInfo)
+    }*/)
 })
+
+function formReset(e) {
+    e.preventDefault();
+    form.reset();
+    renderTodoList();
+}
+
+function cancelButtonCallback(e) {
+    formReset(e)
+}
+
+function confirmButtonCallback(e) {
+    new FormData(form);
+    formReset(e);
+}
+
+function formdataCallback(e) {
+    const data = e.formData;
+    const newTodoItemInfo = [];
+    for(let value of data.values()) {
+        newTodoItemInfo.push(value);
+    }
+    todoCreator(currentProject, ...newTodoItemInfo)
+}
 
 function renderTodoForm() {
     clearTodoArea();
@@ -59,5 +92,4 @@ function loadProject() {
 
 currentProject = setDefault();
 loadProject();
-console.log(currentProject)
 //remember to check how this works with storage

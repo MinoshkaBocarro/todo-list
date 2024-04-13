@@ -8,6 +8,7 @@ class TodoItem {
     }
 
     populateTodoItem({title, description, dueDate, priority, repeated, notes, checklist}) {
+        console.log(repeated)
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
@@ -18,7 +19,7 @@ class TodoItem {
     }
 
     set repeated(repeats) {
-        if(typeof repeats === "undefined") {
+        if(repeats === "none") {
             return
         } 
         let dateToCompare;
@@ -26,7 +27,7 @@ class TodoItem {
         if (isBefore(this.dueDate, constructNow())) {
             dateToCompare = constructNow();
         } else {
-            dateToCompare = this.dueDate;
+            dateToCompare = new Date(this.dueDate);
         }
         // ^ might not need this
         if(repeats === "Daily") {
