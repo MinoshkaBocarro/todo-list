@@ -12,57 +12,33 @@ blank.textContent = "Blank";
 
 newTodoItemButton.addEventListener("click", () => {
     renderTodoForm();
-
-    const cancelButton = document.querySelector('.cancel');
-    const confirmButton = document.querySelector('.confirm');
-
-    //check if these event listeners are working properly after form is closed
-
-    cancelButton.addEventListener("click", cancelButtonCallback /*e => {
-        e.preventDefault();
-        renderTodoList();
-        form.reset();
-    }*/)
-    
-    confirmButton.addEventListener("click", confirmButtonCallback /*e => {
-        e.preventDefault();
-        new FormData(form);
-        form.reset();
-        renderTodoList();
-    }*/)
-
-    form.addEventListener("formdata", formdataCallback /*e => {
-        const data = e.formData;
-        const newTodoItemInfo = [];
-        for(let value of data.values()) {
-            newTodoItemInfo.push(value);
-        }
-        todoCreator(currentProject, ...newTodoItemInfo)
-    }*/)
 })
 
-function formReset(e) {
-    e.preventDefault();
-    form.reset();
-    renderTodoList();
-}
+const cancelButton = form.querySelector('.cancel');
+const confirmButton = form.querySelector('.confirm');
 
-function cancelButtonCallback(e) {
+cancelButton.addEventListener("click", e => {
     formReset(e)
-}
-
-function confirmButtonCallback(e) {
+})
+    
+confirmButton.addEventListener("click", e => {
     new FormData(form);
     formReset(e);
-}
+})
 
-function formdataCallback(e) {
+form.addEventListener("formdata", e => {
     const data = e.formData;
     const newTodoItemInfo = [];
     for(let value of data.values()) {
         newTodoItemInfo.push(value);
     }
     todoCreator(currentProject, ...newTodoItemInfo)
+})
+
+function formReset(e) {
+    e.preventDefault();
+    form.reset();
+    renderTodoList();
 }
 
 function renderTodoForm() {
