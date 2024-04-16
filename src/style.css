@@ -24,7 +24,11 @@ nav {
    flex-direction: column;
 }
 
-.completed {
+.start {
+    height: 100%
+}
+
+.end {
     margin-top: auto;
 }
 

@@ -5,9 +5,10 @@ import { projectList, Project, TodoItem } from "./app-components";
 function setDefault() {
     const projectCreatorId = uuidv4();
     projectCreator("To Do", projectCreatorId);
-    projectList.setCurrentProject(projectCreatorId);
-    return projectList.getCurrentProject();
+    projectCreator("Completed", "00000000-0000-0000-0000-000000000000");
+    return updateCurrentProject(projectCreatorId);
 }
+// check how this works with storage
 
 function todoCreator(currentProject,  id = uuidv4(), title, description, dueDate, priority, repeated, notes, checklist) {
     const todoInfo = { title, description, dueDate, priority, repeated, notes, checklist }
@@ -42,6 +43,11 @@ function moveIntoProject(currentProject, itemId, destinationProjectId) {
    destinationProject.addItem(itemToBeMoved);
 }
 
+function updateCurrentProject(id) {
+    projectList.setCurrentProject(id);
+    return projectList.getCurrentProject();
+}
+
 const todoItemInfo =["Todo Title", "Todo Description", '2024-01-01', 'low', 'none'];
 const todoId = uuidv4();
 const newProjectName = "New Project Name"
@@ -69,4 +75,4 @@ moveIntoProject(currentProject, todoId, projectId2)
 "stop"
 
 
-export { setDefault, todoCreator }
+export { setDefault, todoCreator, updateCurrentProject }
