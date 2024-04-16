@@ -29,15 +29,15 @@ class TodoItem {
             dateToCompare = new Date(this.dueDate);
         }
         // ^ might not need this
-        if(repeats === "Daily") {
-            nextDueDate = addDays(dateToCompare, 2);
-        } else if (repeats === "Weekly") {
+        if(repeats === "daily") {
+            nextDueDate = addDays(dateToCompare, 1);
+        } else if (repeats === "weekly") {
             nextDueDate = addWeeks(dateToCompare, 1);
-        } else if (repeats === "Fortnightly") {
+        } else if (repeats === "fortnightly") {
             nextDueDate = addWeeks(dateToCompare, 2);
-        } else if (repeats === "Monthly") {
+        } else if (repeats === "monthly") {
             nextDueDate = addMonths(dateToCompare, 1);
-        } else if (repeats === "Yearly") {
+        } else if (repeats === "yearly") {
             nextDueDate = addYears(dateToCompare, 1);
         }
         this.nextDueDate = format(nextDueDate, 'yyyy-MM-dd')
@@ -59,7 +59,6 @@ class Collection {
     searchItemList(id) {
         for (let i = 0; i < this.itemList.length; i++) {
             if (this.itemList[i].id === id) {
-                console.log(this.itemList[i])
                 return {
                     item: this.itemList[i].item,
                     index: i,
@@ -69,7 +68,6 @@ class Collection {
     }
 
     getItem(id) {
-        console.log(this.searchItemList(id))
         return this.searchItemList(id).item;
     }
 
