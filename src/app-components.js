@@ -8,7 +8,6 @@ class TodoItem {
     }
 
     populateTodoItem({title, description, dueDate, priority, repeated, notes, checklist}) {
-        console.log(repeated)
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
@@ -113,21 +112,39 @@ const projectList = (function() {
         return currentProject;
     };
 
+    const getProject = function(id) {
+
+        return searchProjectList(id).project;
+    }
+
     const getProjectList = function() {
         return projectList;
     };
 
-    const setCurrentProject = function(currentProjectIndex) {
-        currentProject = projectList[currentProjectIndex];
+    const searchProjectList = function(id) {
+        for (let i = 0; i < projectList.length; i++) {
+            if (projectList[i].id === id) {
+                return { 
+                    project: projectList[i].project,
+                    index: i,
+                };
+            }
+        }
+    };
+
+    const setCurrentProject = function(currentProjectId) {
+        currentProject = searchProjectList(currentProjectId).project;
     };
     
-    const sortProjects = function(originalIndex, newIndex) {
-        const item = projectList[originalIndex];
-        projectList.splice(originalIndex, 1);
+    const sortProjects = function(originalPositionId, afterItemId) {
+        const item = searchProjectList(originalPositionId).project;
+        const itemIndex = searchProjectList(originalPositionId).id;
+        const newIndex = searchProjectList(afterItemId).id + 1;
+        projectList.splice(itemIndex, 1);
         projectList.splice(newIndex, 0, item);
     };
 
-    return { getCurrentProject, setCurrentProject, addProject, getProjectList, sortProjects };
+    return { getCurrentProject, setCurrentProject, addProject, getProjectList, sortProjects, getProject };
 })();
 
 export { projectList, Project, TodoItem}

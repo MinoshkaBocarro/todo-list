@@ -3,7 +3,7 @@ import { projectList } from "./app-components";
 function createTodoList() {
     const todoListContainer = document.createElement('div');
     //might have to add a class for styling
-
+    
     projectList.getCurrentProject().getItemList().forEach((item) => {
         const itemContainer = document.createElement('div');
         //might have to add a class for styling the div as a whole
