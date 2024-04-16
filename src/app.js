@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import { projectList, Project, TodoItem } from "./app-components";
 
+
 function setDefault() {
     const projectCreatorId = uuidv4();
     projectCreator("To Do", projectCreatorId);
@@ -8,50 +9,53 @@ function setDefault() {
     return projectList.getCurrentProject();
 }
 
-function todoCreator(currentProject, title, description, dueDate, priority, repeated, notes, checklist) {
+function todoCreator(currentProject,  id = uuidv4(), title, description, dueDate, priority, repeated, notes, checklist) {
     const todoInfo = { title, description, dueDate, priority, repeated, notes, checklist }
-    const newTodoItem = new TodoItem(todoInfo);
+    const newTodoItem = { 
+        item: new TodoItem(todoInfo),
+        id: id,
+    };
     currentProject.addItem(newTodoItem);
 }
 
 function projectCreator(projectName, id = uuidv4()) {
     const newProject = {
-        project: new Project(projectName),
+        item: new Project(projectName),
         id: id,
-    }
-    projectList.addProject(newProject);
+    };
+    projectList.addItem(newProject);
 }
 
-function todoEditor(currentProject, todoItemIndex, todoInfo) {
-    const todoItem = currentProject.getItem(todoItemIndex);
+function todoEditor(currentProject, todoItemId, todoInfo) {
+    const todoItem = currentProject.getItem(todoItemId);
     todoItem.populateTodoItem(todoInfo);
-    //Do I expect to get the full todoInfo every time?
 }
 
 function projectEditor(currentProject, newProjectName) {
-    currentProject.projectName = newProjectName;
+    currentProject.collectionName = newProjectName;
 }
 
-function moveIntoProject(currentProject, itemIndex, destinationProjectId) {
-   const itemToBeMoved = currentProject.getItem(itemIndex);
-   currentProject.deleteItem(itemIndex);
-   const destinationProject = projectList.getProject(destinationProjectId);
+function moveIntoProject(currentProject, itemId, destinationProjectId) {
+   const itemToBeMoved = currentProject.getItem(itemId);
+   currentProject.deleteItem(itemId);
+   const destinationProject = projectList.getItem(destinationProjectId);
    destinationProject.addItem(itemToBeMoved);
 }
 
 const todoItemInfo =["Todo Title", "Todo Description", '2024-01-01', 'low', 'none'];
+const todoId = uuidv4();
 const newProjectName = "New Project Name"
 const projectId = uuidv4();
 projectCreator(newProjectName, projectId)
 projectList.setCurrentProject(projectId);
 let currentProject = projectList.getCurrentProject();
-todoCreator(currentProject, ...todoItemInfo);
+todoCreator(currentProject, todoId, ...todoItemInfo);
 projectEditor(currentProject, "Working Title")
 const todoItemEdit = {title: "Totle", description: "Totion", dueDate: '2024-06-01', repeated: 'none'};
-todoEditor(currentProject, 0, todoItemEdit)
+todoEditor(currentProject, todoId, todoItemEdit)
 const projectId2 = uuidv4();
 projectCreator("Destination", projectId2)
-moveIntoProject(currentProject, 0, projectId2)
+moveIntoProject(currentProject, todoId, projectId2)
 // todoCreator(currentProject, {title: "quarrel", description: "Todo Description", dueDate: '2024-01-01', repeated: 'none'})
 // todoCreator(currentProject, {title: "Jovial", description: "Todo Description", dueDate: '2023-01-01', repeated: 'none'})
 // todoCreator(currentProject, {title: "Jo Not", description: "Todo Description", dueDate: '2024-07-11', repeated: 'none'})

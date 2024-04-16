@@ -45,30 +45,54 @@ class TodoItem {
     }
 }
 
-class Project {
+class Collection {
     itemList = [];
-    completedList = [];
 
-    constructor(projectName){
-        this.projectName = projectName;
+    constructor(collectionName) {
+        this.collectionName = collectionName;
     }
 
-    addItem(item) {
-        this.itemList.push(item);
+    addItem(newItem) {
+        this.itemList.push(newItem);
     }
 
-    getItem(itemIndex) {
-        return this.itemList[itemIndex];
+    searchItemList(id) {
+        for (let i = 0; i < this.itemList.length; i++) {
+            if (this.itemList[i].id === id) {
+                console.log(this.itemList[i])
+                return {
+                    item: this.itemList[i].item,
+                    index: i,
+                };
+            }
+        }
+    }
+
+    getItem(id) {
+        console.log(this.searchItemList(id))
+        return this.searchItemList(id).item;
     }
 
     getItemList() {
         return this.itemList;
     }
 
-    deleteItem(itemIndex) {
+    deleteItem(id) {
+        const itemIndex = this.searchItemList(id).index;
         this.itemList.splice(itemIndex, 1);
     }
 
+    sortItemsManually(originalPositionId, afterItemId) {
+        const item = this.searchItemList(originalPositionId).item;
+        const itemIndex = this.searchItemList(originalPositionId).index;
+        const newIndex = this.searchItemList(afterItemId).index + 1;
+        this.itemList.splice(itemIndex, 1);
+        this.itemList.splice(newIndex, 0, item);
+    }
+}
+
+class Project extends Collection {
+    
     sortBy(sortMethod) {
         if (sortMethod === "Alphabetical") {
             this.itemList.sort((firstTodo, secondTodo) => {
@@ -83,68 +107,27 @@ class Project {
                 return 0;
             });
         } else if (sortMethod === "Due date") {
-            this.itemList.sort((firstTodo, secondTodo) => compareAsc(firstTodo.dueDate, secondTodo.dueDate));
+            this.itemList.sort((firstTodo, secondTodo) => {
+                compareAsc(firstTodo.dueDate, secondTodo.dueDate)
+            });
         }
-    }
-
-    manualSort(originalIndex, newIndex) {
-        const item = this.getItem(originalIndex)
-        this.itemList.splice(originalIndex, 1);
-        this.itemList.splice(newIndex, 0, item);
-    }
-
-    completeItem(itemIndex) {
-        const item = this.getItem(itemIndex)
-        this.itemList.splice(itemIndex, 1);
-        this.completedList.push(item);
     }
 }
 
-const projectList = (function() {
-    const projectList = [];
-    let currentProject;
+class ProjectList extends Collection {
+    currentProject;
 
-    const addProject = function(newProject) {
-        projectList.push(newProject);
-    };
-
-    const getCurrentProject = function() {
-        return currentProject;
-    };
-
-    const getProject = function(id) {
-
-        return searchProjectList(id).project;
+    getCurrentProject() {
+        return this.currentProject;
     }
 
-    const getProjectList = function() {
-        return projectList;
-    };
+    setCurrentProject(currentProjectId) {
+        this.currentProject = this.searchItemList(currentProjectId).item;
+    }
+}
 
-    const searchProjectList = function(id) {
-        for (let i = 0; i < projectList.length; i++) {
-            if (projectList[i].id === id) {
-                return { 
-                    project: projectList[i].project,
-                    index: i,
-                };
-            }
-        }
-    };
+const projectList = new ProjectList("Project List");
+    //see how this works with storage
 
-    const setCurrentProject = function(currentProjectId) {
-        currentProject = searchProjectList(currentProjectId).project;
-    };
-    
-    const sortProjects = function(originalPositionId, afterItemId) {
-        const item = searchProjectList(originalPositionId).project;
-        const itemIndex = searchProjectList(originalPositionId).id;
-        const newIndex = searchProjectList(afterItemId).id + 1;
-        projectList.splice(itemIndex, 1);
-        projectList.splice(newIndex, 0, item);
-    };
-
-    return { getCurrentProject, setCurrentProject, addProject, getProjectList, sortProjects, getProject };
-})();
 
 export { projectList, Project, TodoItem}

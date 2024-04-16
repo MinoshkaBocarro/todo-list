@@ -32,7 +32,7 @@ form.addEventListener("formdata", e => {
     for(let value of data.values()) {
         newTodoItemInfo.push(value);
     }
-    todoCreator(currentProject, ...newTodoItemInfo)
+    todoCreator(currentProject, undefined, ...newTodoItemInfo)
 })
 
 function formReset(e) {
@@ -58,7 +58,7 @@ function clearTodoArea() {
 const projectNameHolder = document.querySelector('.project-heading > h1');
 
 function renderCurrentProjectName() {
-    projectNameHolder.textContent = currentProject.projectName;
+    projectNameHolder.textContent = currentProject.collectionName;
 }
 
 function loadProject() {
