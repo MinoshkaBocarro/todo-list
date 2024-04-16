@@ -79,4 +79,4 @@ moveIntoProject(currentProject, todoId, projectId2)
 "stop"
 
 
-export { setDefault, todoCreator, updateCurrentProject }
+export { setDefault, todoCreator, projectCreator, updateCurrentProject }
