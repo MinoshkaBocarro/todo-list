@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 import { projectList, Project, TodoItem } from "./app-components";
+import { id } from "date-fns/locale";
 
 
 function setDefault() {
@@ -37,7 +38,10 @@ function projectEditor(currentProject, newProjectName) {
 }
 
 function moveIntoProject(currentProject, itemId, destinationProjectId) {
-   const itemToBeMoved = currentProject.getItem(itemId);
+   const itemToBeMoved = {
+        item: currentProject.getItem(itemId),
+        id: id
+   }
    currentProject.deleteItem(itemId);
    const destinationProject = projectList.getItem(destinationProjectId);
    destinationProject.addItem(itemToBeMoved);
