@@ -10,11 +10,20 @@ function createTodoList() {
         //might have to add a class for styling the div as a whole
         itemContainer.classList.add = todo.priority.toLowerCase();
         // check this
+        itemContainer.classList.add = "todo-item"
+        itemContainer.setAttribute('data-todo-id', item.id);
+
+
         const title = document.createElement('div');
         title.textContent = todo.title;
         const dueDate = document.createElement('div');
         dueDate.textContent = todo.dueDate;
-        itemContainer.append(title, dueDate);
+
+        const viewButton = document.createElement('button');
+        viewButton.textContent = "View";
+        console.log(viewButton.parentElement)
+
+        itemContainer.append(title, dueDate, viewButton);
         todoListContainer.append(itemContainer);
     })
 

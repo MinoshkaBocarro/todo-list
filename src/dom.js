@@ -1,5 +1,5 @@
-import { projectCreator, setDefault, todoCreator, updateCurrentProject } from "./app";
-import { form } from "./create-form";
+import { projectCreator, setDefault, todoCreator, todoEditor, updateCurrentProject } from "./app";
+import { createTodoForm } from "./create-form";
 import { createProjectList } from "./create-project-list";
 import { createTodoList } from "./create-todo-list";
 
@@ -9,44 +9,72 @@ const newTodoItemButton = document.querySelector('.project-heading > button');
 const todoArea = document.querySelector('.todo-area');
 
 newTodoItemButton.addEventListener("click", () => {
-    renderTodoForm();
+    renderTodoForm("new");
 })
 
-const cancelButton = form.querySelector('.cancel');
-const confirmButton = form.querySelector('.confirm');
-
-cancelButton.addEventListener("click", e => {
-    todoFormReset(e);
-})
-    
-confirmButton.addEventListener("click", e => {
-    new FormData(form);
-    todoFormReset(e);
-})
-
-form.addEventListener("formdata", e => {
+function getTodoInfo(e) {
     const data = e.formData;
-    const newTodoItemInfo = [];
+    const todoItemInfo = [];
     for(let value of data.values()) {
-        newTodoItemInfo.push(value);
+        todoItemInfo.push(value);
     }
-    todoCreator(currentProject, undefined, ...newTodoItemInfo);
-})
-
-function todoFormReset(e) {
-    e.preventDefault();
-    form.reset();
-    renderTodoList();
+    return todoItemInfo
 }
 
-function renderTodoForm() {
+function renderTodoForm(type, id) {
     clearTodoArea();
-    todoArea.append(form);
+    todoArea.append(createTodoForm(type, id));
+
+    let form;
+
+    if (type === "new") {
+        form = todoArea.querySelector('form');
+        form.addEventListener("formdata", e => {
+            const todoItemInfo = getTodoInfo(e);
+            todoCreator(currentProject, undefined, ...todoItemInfo);
+        })
+    } else if (type === "edit") {
+        form = todoArea.querySelector('form')
+        form.addEventListener("formdata", e => {
+            const todoItemInfo = getTodoInfo(e);
+            const todoId = e.target.getAttribute('data-form-id');
+            console.log(todoItemInfo)
+            todoEditor(currentProject, todoId, ...todoItemInfo);
+        })
+    }
+
+    const cancelButton = todoArea.querySelector('.cancel');
+    const confirmButton = todoArea.querySelector('.confirm');
+
+    cancelButton.addEventListener("click", e => {
+        todoFormReset(e);
+    })
+        
+    confirmButton.addEventListener("click", e => {
+        new FormData(form);
+        todoFormReset(e);
+    })
+
+    function todoFormReset(e) {
+        e.preventDefault();
+        form.reset();
+        renderTodoList();
+    }
 }
 
 function renderTodoList() {
     clearTodoArea();
     todoArea.append(createTodoList());
+
+    const todoViewButtons = todoArea.querySelectorAll('button');
+
+    todoViewButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const todoId = e.target.parentNode.getAttribute('data-todo-id');
+            //check this
+            renderTodoForm("edit", todoId);
+        })
+    })
 }
 
 function clearTodoArea() {

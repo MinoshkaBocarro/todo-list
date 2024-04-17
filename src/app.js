@@ -28,7 +28,8 @@ function projectCreator(projectName, id = uuidv4()) {
     projectList.addItem(newProject);
 }
 
-function todoEditor(currentProject, todoItemId, todoInfo) {
+function todoEditor(currentProject, todoItemId, title, description, dueDate, priority, repeated, notes, checklist) {
+    const todoInfo = { title, description, dueDate, priority, repeated, notes, checklist }
     const todoItem = currentProject.getItem(todoItemId);
     todoItem.populateTodoItem(todoInfo);
 }
@@ -52,20 +53,20 @@ function updateCurrentProject(id) {
     return projectList.getCurrentProject();
 }
 
-const todoItemInfo =["Todo Title", "Todo Description", '2024-01-01', 'low', 'none'];
-const todoId = uuidv4();
-const newProjectName = "New Project Name"
-const projectId = uuidv4();
-projectCreator(newProjectName, projectId)
-projectList.setCurrentProject(projectId);
-let currentProject = projectList.getCurrentProject();
-todoCreator(currentProject, todoId, ...todoItemInfo);
-projectEditor(currentProject, "Working Title")
-const todoItemEdit = {title: "Totle", description: "Totion", dueDate: '2024-06-01', repeated: 'none'};
-todoEditor(currentProject, todoId, todoItemEdit)
-const projectId2 = uuidv4();
-projectCreator("Destination", projectId2)
-moveIntoProject(currentProject, todoId, projectId2)
+// const todoItemInfo =["Todo Title", "Todo Description", '2024-01-01', 'low', 'none'];
+// const todoId = uuidv4();
+// const newProjectName = "New Project Name"
+// const projectId = uuidv4();
+// projectCreator(newProjectName, projectId)
+// projectList.setCurrentProject(projectId);
+// let currentProject = projectList.getCurrentProject();
+// todoCreator(currentProject, todoId, ...todoItemInfo);
+// projectEditor(currentProject, "Working Title")
+// const todoItemEdit = {title: "Totle", description: "Totion", dueDate: '2024-06-01', repeated: 'none'};
+// todoEditor(currentProject, todoId, todoItemEdit)
+// const projectId2 = uuidv4();
+// projectCreator("Destination", projectId2)
+// moveIntoProject(currentProject, todoId, projectId2)
 // todoCreator(currentProject, {title: "quarrel", description: "Todo Description", dueDate: '2024-01-01', repeated: 'none'})
 // todoCreator(currentProject, {title: "Jovial", description: "Todo Description", dueDate: '2023-01-01', repeated: 'none'})
 // todoCreator(currentProject, {title: "Jo Not", description: "Todo Description", dueDate: '2024-07-11', repeated: 'none'})
@@ -79,4 +80,4 @@ moveIntoProject(currentProject, todoId, projectId2)
 "stop"
 
 
-export { setDefault, todoCreator, projectCreator, updateCurrentProject }
+export { setDefault, todoCreator, todoEditor, projectCreator, updateCurrentProject }
