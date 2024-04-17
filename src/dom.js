@@ -32,13 +32,26 @@ function renderTodoForm(type, id) {
         form.addEventListener("formdata", e => {
             const todoItemInfo = getTodoInfo(e);
             todoCreator(currentProject, undefined, ...todoItemInfo);
-        })
+        });
     } else if (type === "edit") {
         form = todoArea.querySelector('form')
         form.addEventListener("formdata", e => {
-            const todoItemInfo = getTodoInfo(e);
             const todoId = e.target.getAttribute('data-form-id');
-            todoEditor(currentProject, todoId, ...todoItemInfo);
+            console.log(currentProject.getItem(todoId))
+            if (currentProject.getItem(todoId) !== undefined) {
+                const todoItemInfo = getTodoInfo(e);
+                todoEditor(currentProject, todoId, ...todoItemInfo);
+            }
+        });
+
+        const deleteButton = document.querySelector('button.delete');
+
+        deleteButton.addEventListener('click', e => {
+            e.preventDefault();
+            const todoId = e.target.parentNode.getAttribute('data-form-id');
+            currentProject.deleteItem(todoId);
+            //might put pop up "do you want to delete" here
+            renderTodoList();
         })
     }
 

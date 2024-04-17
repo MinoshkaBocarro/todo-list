@@ -68,7 +68,9 @@ class Collection {
     }
 
     getItem(id) {
-        return this.searchItemList(id).item;
+        if(this.searchItemList(id) !== undefined) {
+            return this.searchItemList(id).item;
+        }
     }
 
     getItemList() {
