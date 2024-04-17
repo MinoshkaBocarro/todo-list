@@ -1,4 +1,4 @@
-import { projectCreator, setDefault, todoCreator, todoEditor, updateCurrentProject } from "./app";
+import { moveIntoProject, projectCreator, setDefault, todoCreator, todoEditor, updateCurrentProject } from "./app";
 import { createTodoForm } from "./create-form";
 import { createProjectList } from "./create-project-list";
 import { createTodoList } from "./create-todo-list";
@@ -38,7 +38,6 @@ function renderTodoForm(type, id) {
         form.addEventListener("formdata", e => {
             const todoItemInfo = getTodoInfo(e);
             const todoId = e.target.getAttribute('data-form-id');
-            console.log(todoItemInfo)
             todoEditor(currentProject, todoId, ...todoItemInfo);
         })
     }
@@ -73,8 +72,25 @@ function renderTodoList() {
             const todoId = e.target.parentNode.getAttribute('data-todo-id');
             //check this
             renderTodoForm("edit", todoId);
+        });
+    });
+
+    const todoCompleteButtons = todoArea.querySelectorAll('[type="checkbox"]');
+
+    todoCompleteButtons.forEach(button => {
+        button.addEventListener('click', e => {
+            e.target.parentNode.classList.toggle('completed');
         })
-    })
+    });
+}
+
+function checkForCompleted() {
+    const completedTodos = todoArea.querySelectorAll('.completed');
+
+    completedTodos.forEach(todo => {
+        const todoId = todo.getAttribute('data-todo-id');
+        moveIntoProject(currentProject, todoId, "00000000-0000-0000-0000-000000000000");
+    });
 }
 
 function clearTodoArea() {
@@ -110,6 +126,7 @@ const completedProject = document.querySelector('.completed');
 completedProject.addEventListener('click', projectCallback);
 
 function projectCallback(e) {
+    checkForCompleted();
     currentProject = updateCurrentProject(e.target.getAttribute('data-project-id'));
     loadProject();
 }

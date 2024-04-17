@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import { NIL as uuidNil, v4 as uuidv4 } from "uuid";
 import { projectList, Project, TodoItem } from "./app-components";
 import { id } from "date-fns/locale";
 
@@ -80,4 +80,4 @@ function updateCurrentProject(id) {
 "stop"
 
 
-export { setDefault, todoCreator, todoEditor, projectCreator, updateCurrentProject }
+export { setDefault, todoCreator, todoEditor, projectCreator, updateCurrentProject, moveIntoProject }

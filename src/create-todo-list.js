@@ -13,6 +13,11 @@ function createTodoList() {
         itemContainer.classList.add = "todo-item"
         itemContainer.setAttribute('data-todo-id', item.id);
 
+        if(projectList.getCurrentProject().collectionName !== "Completed") {
+            const completeButton = document.createElement('input');
+            completeButton.setAttribute('type', "checkbox");
+            itemContainer.append(completeButton);
+        }
 
         const title = document.createElement('div');
         title.textContent = todo.title;
@@ -21,7 +26,6 @@ function createTodoList() {
 
         const viewButton = document.createElement('button');
         viewButton.textContent = "View";
-        console.log(viewButton.parentElement)
 
         itemContainer.append(title, dueDate, viewButton);
         todoListContainer.append(itemContainer);
