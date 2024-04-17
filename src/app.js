@@ -80,4 +80,4 @@ function updateCurrentProject(id) {
 "stop"
 
 
-export { setDefault, todoCreator, todoEditor, projectCreator, updateCurrentProject, moveIntoProject }
+export { setDefault, todoCreator, todoEditor, projectCreator, projectEditor, updateCurrentProject, moveIntoProject }

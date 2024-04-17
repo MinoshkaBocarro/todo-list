@@ -1,7 +1,8 @@
-import { moveIntoProject, projectCreator, setDefault, todoCreator, todoEditor, updateCurrentProject } from "./app";
-import { createTodoForm } from "./create-form";
+import { moveIntoProject, projectCreator, projectEditor, setDefault, todoCreator, todoEditor, updateCurrentProject } from "./app";
+import { createTodoForm } from "./create-todo-form";
 import { createProjectList } from "./create-project-list";
 import { createTodoList } from "./create-todo-list";
+import { createProjectForm } from "./edit-project-name-form";
 
 let currentProject;
 
@@ -69,7 +70,8 @@ function renderTodoForm(type, id) {
 
     function todoFormReset(e) {
         e.preventDefault();
-        form.reset();
+        form.reset(); 
+        //do I need this?^
         renderTodoList();
     }
 }
@@ -114,7 +116,29 @@ const projectNameHolder = document.querySelector('.project-heading > h1');
 
 function renderCurrentProjectName() {
     projectNameHolder.textContent = currentProject.collectionName;
+    // console.log(currentProject.id)
+    // projectNameHolder.setAttribute('data-project-id', currentProject.id);
 }
+
+projectNameHolder.addEventListener('dblclick', () => {
+    projectNameHolder.textContent = ""
+    projectNameHolder.append(createProjectForm())
+    
+    const projectNameForm = projectNameHolder.querySelector('form');
+    const confirmButton = projectNameHolder.querySelector('.confirm');
+        
+    confirmButton.addEventListener("click", e => {
+        e.preventDefault();
+        new FormData(projectNameForm);
+        renderCurrentProjectName();
+        renderProjectList();
+    });
+
+    projectNameForm.addEventListener("formdata", e => {
+        const newProjectName = e.formData.get("project-name");
+        projectEditor(currentProject, newProjectName);
+    });
+});
 
 function loadProject() {
     renderCurrentProjectName();
