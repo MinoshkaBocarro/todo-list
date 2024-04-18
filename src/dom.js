@@ -6,13 +6,12 @@ import { createProjectForm } from "./edit-project-name-form";
 
 let currentProject;
 
+//todos
 const newTodoItemButton = document.querySelector('.project-heading > button');
 const todoArea = document.querySelector('.todo-area');
 
-newTodoItemButton.addEventListener("click", () => {
-    renderTodoForm("new");
-})
 
+//todo functions
 function getTodoInfo(e) {
     const data = e.formData;
     const todoItemInfo = [];
@@ -21,6 +20,71 @@ function getTodoInfo(e) {
     }
     return todoItemInfo
 }
+
+
+function renderTodoList() {
+    clearTodoArea();
+    todoArea.append(createTodoList());
+
+    const todoViewButtons = todoArea.querySelectorAll('button');
+
+    todoViewButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            const todoId = e.target.parentNode.getAttribute('data-todo-id');
+            //check this
+            renderTodoForm("edit", todoId);
+        });
+    });
+
+    const todoCompleteButtons = todoArea.querySelectorAll('[type="checkbox"]');
+
+    todoCompleteButtons.forEach(button => {
+        button.addEventListener('click', e => {
+            e.target.parentNode.classList.toggle('completed');
+        })
+    });
+
+    const todoItem = todoArea.querySelectorAll('.todo-item');
+    const contextMenu = document.querySelector('.context-menu');
+    console.log(contextMenu)
+
+    todoItem.forEach(item => {
+        item.addEventListener('contextmenu', e => {
+            e.preventDefault();
+            const x = e.x;
+            const y = e.y;
+            contextMenu.classList.add('show');
+            contextMenu.setAttribute('data-todo-id', e.currentTarget.getAttribute('data-todo-id'));
+            contextMenu.style.top = `${y}px`
+            contextMenu.style.left = `${x}px`
+        });
+    });
+
+    document.addEventListener('click', e => {
+        if (!e.target.closest('.context-menu')) {
+            contextMenu.classList.remove('show');
+        }
+    })
+}
+
+
+function checkForCompleted() {
+    const completedTodos = todoArea.querySelectorAll('.completed');
+
+    completedTodos.forEach(todo => {
+        const todoId = todo.getAttribute('data-todo-id');
+        moveIntoProject(currentProject, todoId, "00000000-0000-0000-0000-000000000000");
+    });
+}
+
+function clearTodoArea() {
+    todoArea.replaceChildren();
+}
+
+//todo form
+newTodoItemButton.addEventListener("click", () => {
+    renderTodoForm("new");
+})
 
 function renderTodoForm(type, id) {
     clearTodoArea();
@@ -76,71 +140,8 @@ function renderTodoForm(type, id) {
     }
 }
 
-function renderTodoList() {
-    clearTodoArea();
-    todoArea.append(createTodoList());
-
-    const todoViewButtons = todoArea.querySelectorAll('button');
-
-    todoViewButtons.forEach(button => {
-        button.addEventListener('click', (e) => {
-            const todoId = e.target.parentNode.getAttribute('data-todo-id');
-            //check this
-            renderTodoForm("edit", todoId);
-        });
-    });
-
-    const todoCompleteButtons = todoArea.querySelectorAll('[type="checkbox"]');
-
-    todoCompleteButtons.forEach(button => {
-        button.addEventListener('click', e => {
-            e.target.parentNode.classList.toggle('completed');
-        })
-    });
-
-    const todoItem = todoArea.querySelectorAll('.todo-item');
-    const contextMenu = document.querySelector('.context-menu');
-    console.log(contextMenu)
-
-    todoItem.forEach(item => {
-        item.addEventListener('contextmenu', e => {
-            e.preventDefault();
-            const x = e.x;
-            const y = e.y;
-            contextMenu.classList.add('show');
-            contextMenu.setAttribute('data-todo-id', e.currentTarget.getAttribute('data-todo-id'));
-            contextMenu.style.top = `${y}px`
-            contextMenu.style.left = `${x}px`
-        });
-    });
-
-    document.addEventListener('click', e => {
-        if (!e.target.closest('.context-menu')) {
-            contextMenu.classList.remove('show');
-        }
-    })
-}
-
-function checkForCompleted() {
-    const completedTodos = todoArea.querySelectorAll('.completed');
-
-    completedTodos.forEach(todo => {
-        const todoId = todo.getAttribute('data-todo-id');
-        moveIntoProject(currentProject, todoId, "00000000-0000-0000-0000-000000000000");
-    });
-}
-
-function clearTodoArea() {
-    todoArea.replaceChildren();
-}
-
+//project
 const projectNameHolder = document.querySelector('.project-heading > h1');
-
-function renderCurrentProjectName() {
-    projectNameHolder.textContent = currentProject.collectionName;
-    // console.log(currentProject.id)
-    // projectNameHolder.setAttribute('data-project-id', currentProject.id);
-}
 
 projectNameHolder.addEventListener('dblclick', () => {
     projectNameHolder.textContent = ""
@@ -162,11 +163,19 @@ projectNameHolder.addEventListener('dblclick', () => {
     });
 });
 
+//project functions
+function renderCurrentProjectName() {
+    projectNameHolder.textContent = currentProject.collectionName;
+    // console.log(currentProject.id)
+    // projectNameHolder.setAttribute('data-project-id', currentProject.id);
+}
+
 function loadProject() {
     renderCurrentProjectName();
     renderTodoList();
 }
 
+//project list
 const projectListHolder = document.querySelector('nav .start');
 
 function renderProjectList() {
@@ -212,7 +221,7 @@ confirmNewProjectButton.addEventListener('click', (e) => {
     renderProjectList();
 });
 
-
+//on page load
 currentProject = setDefault();
 loadProject();
 renderProjectList();
