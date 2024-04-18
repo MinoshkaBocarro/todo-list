@@ -64,7 +64,7 @@ function renderTodoList() {
         if (!e.target.closest('.context-menu')) {
             contextMenu.classList.remove('show');
         }
-    })
+    });
 }
 
 
