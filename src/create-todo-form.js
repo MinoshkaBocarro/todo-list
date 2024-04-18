@@ -99,14 +99,6 @@ function createTodoForm(type, todoId) {
 
     form.append(ul);
 
-    if (type === "edit") {
-        const deleteButton = document.createElement('button');
-        deleteButton.setAttribute('class', 'delete');
-        deleteButton.textContent = "Delete"
-        
-        form.append(deleteButton);
-    }
-
     const cancelButton = document.createElement('button');
     cancelButton.setAttribute('value', 'cancel');
     cancelButton.setAttribute('class', 'cancel');

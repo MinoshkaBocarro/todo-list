@@ -62,8 +62,12 @@ function renderTodoList() {
 
     document.addEventListener('click', e => {
         if (!e.target.closest('.context-menu')) {
-            contextMenu.classList.remove('show');
+            closeContextMenu();
         }
+    });
+
+    window.addEventListener('resize', () => {
+        closeContextMenu();
     });
 }
 
@@ -108,16 +112,6 @@ function renderTodoForm(type, id) {
                 todoEditor(currentProject, todoId, ...todoItemInfo);
             }
         });
-
-        const deleteButton = document.querySelector('button.delete');
-
-        deleteButton.addEventListener('click', e => {
-            e.preventDefault();
-            const todoId = e.target.parentNode.getAttribute('data-form-id');
-            currentProject.deleteItem(todoId);
-            //might put pop up "do you want to delete" here
-            renderTodoList();
-        })
     }
 
     const cancelButton = todoArea.querySelector('.cancel');
@@ -220,6 +214,25 @@ confirmNewProjectButton.addEventListener('click', (e) => {
     newProjectForm.reset();
     renderProjectList();
 });
+
+//context menu
+
+const contextMenu = document.querySelector('.context-menu');
+
+function closeContextMenu() {
+    contextMenu.classList.remove('show');
+}
+
+const deleteOption = document.querySelector('.delete');
+
+deleteOption.addEventListener('click', e => {
+    e.preventDefault();
+    const todoId = e.target.parentNode.parentNode.getAttribute('data-todo-id');
+    currentProject.deleteItem(todoId);
+    //might put pop up "do you want to delete" here
+    closeContextMenu()
+    renderTodoList();
+})
 
 //on page load
 currentProject = setDefault();
