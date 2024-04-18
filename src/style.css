@@ -49,3 +49,14 @@ article h1 {
 article button {
     margin-left: auto;
 }
+
+.context-menu {
+    display: none;
+}
+
+.context-menu.show {
+    display: block;
+    position: absolute;
+    z-index: 1000;
+    border: black 1px solid;
+}

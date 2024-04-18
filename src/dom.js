@@ -97,6 +97,28 @@ function renderTodoList() {
             e.target.parentNode.classList.toggle('completed');
         })
     });
+
+    const todoItem = todoArea.querySelectorAll('.todo-item');
+    const contextMenu = document.querySelector('.context-menu');
+    console.log(contextMenu)
+
+    todoItem.forEach(item => {
+        item.addEventListener('contextmenu', e => {
+            e.preventDefault();
+            const x = e.x;
+            const y = e.y;
+            contextMenu.classList.add('show');
+            contextMenu.setAttribute('data-todo-id', e.currentTarget.getAttribute('data-todo-id'));
+            contextMenu.style.top = `${y}px`
+            contextMenu.style.left = `${x}px`
+        });
+    });
+
+    document.addEventListener('click', e => {
+        if (!e.target.closest('.context-menu')) {
+            contextMenu.classList.remove('show');
+        }
+    })
 }
 
 function checkForCompleted() {

@@ -8,10 +8,12 @@ function createTodoList() {
         const todo = item.item;
         const itemContainer = document.createElement('div');
         //might have to add a class for styling the div as a whole
-        itemContainer.classList.add = todo.priority.toLowerCase();
+        itemContainer.classList.add(todo.priority.toLowerCase());
         // check this
-        itemContainer.classList.add = "todo-item"
+        itemContainer.classList.add("todo-item");
+        console.log(itemContainer)
         itemContainer.setAttribute('data-todo-id', item.id);
+        console.log(itemContainer)
 
         if(projectList.getCurrentProject().collectionName !== "Completed") {
             const completeButton = document.createElement('input');
