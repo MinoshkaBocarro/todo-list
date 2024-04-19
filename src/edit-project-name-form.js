@@ -13,9 +13,6 @@ function createProjectForm() {
     projectInput.setAttribute('type', 'text');
     projectInput.setAttribute('id', 'project-name');
     projectInput.setAttribute('name', 'project-name');
-    console.log(projectList)
-    console.log(projectList.getCurrentProject())
-    console.log(projectList.getCurrentProject().collectionName)
     projectInput.setAttribute('value', projectList.getCurrentProject().collectionName);
     projectContainer.append(projectLabel, projectInput);
     form.append(projectContainer);

@@ -3,6 +3,7 @@ import { createTodoForm } from "./create-todo-form";
 import { createProjectList } from "./create-project-list";
 import { createTodoList } from "./create-todo-list";
 import { createProjectForm } from "./edit-project-name-form";
+import { createMoveMenu } from "./create-move-menu";
 
 let currentProject;
 
@@ -21,6 +22,18 @@ function getTodoInfo(e) {
     return todoItemInfo
 }
 
+function getTodoIdFromDom(e) {
+    console.log("e.target")
+    console.log(e.target)
+    console.log("e.target.closest('[data-todo-id]')");
+    console.log(e.target.closest('[data-todo-id]'));
+    console.log("e.target.closest('[data-todo-id]').dataset")
+    console.log(e.target.closest('[data-todo-id]').dataset)
+    console.log("e.target.closest('[data-todo-id]').dataset.todoId")
+    console.log(e.target.closest('[data-todo-id]').dataset.todoId)
+    return e.target.closest('[data-todo-id]').dataset.todoId;
+}
+
 
 function renderTodoList() {
     clearTodoArea();
@@ -30,7 +43,7 @@ function renderTodoList() {
 
     todoViewButtons.forEach(button => {
         button.addEventListener('click', (e) => {
-            const todoId = e.target.parentNode.getAttribute('data-todo-id');
+            const todoId = getTodoIdFromDom(e);
             //check this
             renderTodoForm("edit", todoId);
         });
@@ -46,7 +59,6 @@ function renderTodoList() {
 
     const todoItem = todoArea.querySelectorAll('.todo-item');
     const contextMenu = document.querySelector('.context-menu');
-    console.log(contextMenu)
 
     todoItem.forEach(item => {
         item.addEventListener('contextmenu', e => {
@@ -54,20 +66,22 @@ function renderTodoList() {
             const x = e.x;
             const y = e.y;
             contextMenu.classList.add('show');
-            contextMenu.setAttribute('data-todo-id', e.currentTarget.getAttribute('data-todo-id'));
+            contextMenu.setAttribute('data-todo-id', getTodoIdFromDom(e));
+            //check this
             contextMenu.style.top = `${y}px`
             contextMenu.style.left = `${x}px`
         });
     });
 
     document.addEventListener('click', e => {
-        if (!e.target.closest('.context-menu')) {
-            closeContextMenu();
+        if (!e.target.closest('.context-menu') /*|| !e.target.closest('.move')*/) {
+            //check this
+            closeMenus();
         }
     });
 
     window.addEventListener('resize', () => {
-        closeContextMenu();
+        closeMenus();
     });
 }
 
@@ -76,7 +90,7 @@ function checkForCompleted() {
     const completedTodos = todoArea.querySelectorAll('.completed');
 
     completedTodos.forEach(todo => {
-        const todoId = todo.getAttribute('data-todo-id');
+        const todoId = todo.dataset.todoId;
         moveIntoProject(currentProject, todoId, "00000000-0000-0000-0000-000000000000");
     });
 }
@@ -105,8 +119,7 @@ function renderTodoForm(type, id) {
     } else if (type === "edit") {
         form = todoArea.querySelector('form')
         form.addEventListener("formdata", e => {
-            const todoId = e.target.getAttribute('data-form-id');
-            console.log(currentProject.getItem(todoId))
+            const todoId = e.target.formId;
             if (currentProject.getItem(todoId) !== undefined) {
                 const todoItemInfo = getTodoInfo(e);
                 todoEditor(currentProject, todoId, ...todoItemInfo);
@@ -189,7 +202,7 @@ completedProject.addEventListener('click', projectCallback);
 
 function projectCallback(e) {
     checkForCompleted();
-    currentProject = updateCurrentProject(e.target.getAttribute('data-project-id'));
+    currentProject = updateCurrentProject(e.target.dataset.projectId);
     loadProject();
 }
 
@@ -217,22 +230,58 @@ confirmNewProjectButton.addEventListener('click', (e) => {
 
 //context menu
 
+const menus = document.querySelectorAll('.menu');
 const contextMenu = document.querySelector('.context-menu');
 
-function closeContextMenu() {
-    contextMenu.classList.remove('show');
+function closeMenus() {
+    menus.forEach(menu => {
+        menu.classList.remove('show');
+        if (menu.classList.contains('move')) {
+            moveOption.replaceChildren();
+            moveOption.textContent = "Move Todo";
+            contextMenu.removeChild(menu)
+        }
+    });
 }
+//not sold on this, check later
 
 const deleteOption = document.querySelector('.delete');
 
 deleteOption.addEventListener('click', e => {
     e.preventDefault();
-    const todoId = e.target.parentNode.parentNode.getAttribute('data-todo-id');
+    const todoId = getTodoIdFromDom(e);
     currentProject.deleteItem(todoId);
     //might put pop up "do you want to delete" here
-    closeContextMenu()
+    closeMenus();
     renderTodoList();
 })
+
+const moveOption = document.querySelector('.move');
+
+moveOption.addEventListener('click', e => {
+    if (contextMenu.classList.contains('show')) {
+        showMoveMenu(e);
+    }
+});
+
+function showMoveMenu(e) {
+    e.preventDefault();
+    const todoId = getTodoIdFromDom(e);
+    const x = e.x;
+    const y = e.y;
+    e.target.append(createMoveMenu(x, y));
+    const projects = document.querySelectorAll('.available-projects');
+    // check this
+    projects.forEach(project => {
+        project.addEventListener('click', () => {
+            moveIntoProject(currentProject, todoId, project.dataset.projectId);
+            moveOption.replaceChildren();
+            moveOption.textContent = "Move Todo";
+            closeMenus();
+            renderTodoList();
+        });
+    });
+}
 
 //on page load
 currentProject = setDefault();

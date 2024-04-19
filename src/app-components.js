@@ -116,13 +116,19 @@ class Project extends Collection {
 
 class ProjectList extends Collection {
     currentProject;
+    currentProjectId;
 
     getCurrentProject() {
         return this.currentProject;
     }
 
+    getCurrentProjectId() {
+        return this.currentProjectId;
+    }
+
     setCurrentProject(currentProjectId) {
         this.currentProject = this.searchItemList(currentProjectId).item;
+        this.currentProjectId = currentProjectId;
     }
 }
 

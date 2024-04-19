@@ -1,7 +1,5 @@
-import { NIL as uuidNil, v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 import { projectList, Project, TodoItem } from "./app-components";
-import { id } from "date-fns/locale";
-
 
 function setDefault() {
     const projectCreatorId = uuidv4();
@@ -41,7 +39,7 @@ function projectEditor(currentProject, newProjectName) {
 function moveIntoProject(currentProject, itemId, destinationProjectId) {
    const itemToBeMoved = {
         item: currentProject.getItem(itemId),
-        id: id
+        id: itemId
    }
    currentProject.deleteItem(itemId);
    const destinationProject = projectList.getItem(destinationProjectId);

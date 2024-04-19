@@ -5,15 +5,17 @@ function createTodoList() {
     //might have to add a class for styling
 
     projectList.getCurrentProject().getItemList().forEach((item) => {
+        console.log(item)
+        console.log("item")
         const todo = item.item;
         const itemContainer = document.createElement('div');
         //might have to add a class for styling the div as a whole
         itemContainer.classList.add(todo.priority.toLowerCase());
         // check this
         itemContainer.classList.add("todo-item");
-        console.log(itemContainer)
+        console.log("item.id")
+        console.log(item.id)
         itemContainer.setAttribute('data-todo-id', item.id);
-        console.log(itemContainer)
 
         if(projectList.getCurrentProject().collectionName !== "Completed") {
             const completeButton = document.createElement('input');
