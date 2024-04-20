@@ -85,9 +85,14 @@ class Collection {
     sortItemsManually(originalPositionId, afterItemId) {
         const item = this.searchItemList(originalPositionId).item;
         const itemIndex = this.searchItemList(originalPositionId).index;
-        const newIndex = this.searchItemList(afterItemId).index + 1;
+        let newIndex;
+        if (afterItemId === undefined) {
+            newIndex = 0;
+        } else {
+            newIndex = this.searchItemList(afterItemId).index + 1;
+        }
         this.itemList.splice(itemIndex, 1);
-        this.itemList.splice(newIndex, 0, item);
+        this.itemList.splice(newIndex, 0, {item: item, id: originalPositionId });
     }
 }
 

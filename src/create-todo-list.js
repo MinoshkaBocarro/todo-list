@@ -5,21 +5,17 @@ function createTodoList() {
     //might have to add a class for styling
 
     projectList.getCurrentProject().getItemList().forEach((item) => {
-        console.log(item)
-        console.log("item")
         const todo = item.item;
         const itemContainer = document.createElement('div');
-        //might have to add a class for styling the div as a whole
         itemContainer.classList.add(todo.priority.toLowerCase());
         // check this
-        itemContainer.classList.add("todo-item");
-        console.log("item.id")
-        console.log(item.id)
+        itemContainer.classList.add('todo-item');
         itemContainer.setAttribute('data-todo-id', item.id);
+        itemContainer.setAttribute('draggable', 'true')
 
         if(projectList.getCurrentProject().collectionName !== "Completed") {
             const completeButton = document.createElement('input');
-            completeButton.setAttribute('type', "checkbox");
+            completeButton.setAttribute('type', 'checkbox');
             itemContainer.append(completeButton);
         }
 

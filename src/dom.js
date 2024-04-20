@@ -1,4 +1,4 @@
-import { moveIntoProject, projectCreator, projectEditor, setDefault, todoCreator, todoEditor, updateCurrentProject } from "./app";
+import { manualMoveWithinProject, moveIntoProject, projectCreator, projectEditor, setDefault, todoCreator, todoEditor, updateCurrentProject } from "./app";
 import { createTodoForm } from "./create-todo-form";
 import { createProjectList } from "./create-project-list";
 import { createTodoList } from "./create-todo-list";
@@ -11,6 +11,55 @@ let currentProject;
 const newTodoItemButton = document.querySelector('.project-heading > button');
 const todoArea = document.querySelector('.todo-area');
 
+//drag and drop
+todoArea.addEventListener('dragover', e => {
+    e.preventDefault();
+    const elementAbove = getElementAboveDraggable(e.y);
+    const space = document.createElement('div')
+    space.classList.add('space');
+    const draggable = document.querySelector('.dragging');
+    const itemToSortId = draggable.dataset.todoId;
+    const currentSpaces = document.querySelectorAll('.space')
+    if (elementAbove === undefined) {
+        manualMoveWithinProject(currentProject, itemToSortId);
+        if (currentSpaces.length > 0) {
+            currentSpaces.forEach(space => {
+                if (space !== space.parentNode.firstElementChild) {
+                    space.remove();
+                }
+            });
+        }
+        if (currentSpaces.length === 0) {
+            todoArea.prepend(space);
+        }
+    } else {
+        manualMoveWithinProject(currentProject, itemToSortId, elementAbove.dataset.todoId);
+        if (currentSpaces.length > 0) {
+            currentSpaces.forEach(space => {
+                if (space !== elementAbove.nextSibling) {
+                    space.remove();
+                }
+            });
+        }
+        if (currentSpaces.length === 0) {
+            elementAbove.after(space);
+        }
+    }
+});
+
+function getElementAboveDraggable(y) {
+    const otherDraggableElements = [...todoArea.querySelectorAll('.todo-item:not(.dragging)')];
+
+    return otherDraggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset > 0 && offset < closest.offset) {
+            return { offset: offset, element: child };
+        } else {
+            return closest
+        }
+    }, { offset: Number.POSITIVE_INFINITY }).element;
+}
 
 //todo functions
 function getTodoInfo(e) {
@@ -23,14 +72,6 @@ function getTodoInfo(e) {
 }
 
 function getTodoIdFromDom(e) {
-    console.log("e.target")
-    console.log(e.target)
-    console.log("e.target.closest('[data-todo-id]')");
-    console.log(e.target.closest('[data-todo-id]'));
-    console.log("e.target.closest('[data-todo-id]').dataset")
-    console.log(e.target.closest('[data-todo-id]').dataset)
-    console.log("e.target.closest('[data-todo-id]').dataset.todoId")
-    console.log(e.target.closest('[data-todo-id]').dataset.todoId)
     return e.target.closest('[data-todo-id]').dataset.todoId;
 }
 
@@ -71,6 +112,13 @@ function renderTodoList() {
             contextMenu.style.top = `${y}px`
             contextMenu.style.left = `${x}px`
         });
+        item.addEventListener('dragstart', () => {
+            item.classList.add('dragging');
+        });
+        item.addEventListener('dragend', () => {
+            item.classList.remove('dragging');
+            renderTodoList();
+        })
     });
 
     document.addEventListener('click', e => {

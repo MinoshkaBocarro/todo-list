@@ -60,3 +60,13 @@ article button {
     z-index: 1000;
     border: black 1px solid;
 }
+
+.space {
+    height: 60px;
+}
+
+.dragging {
+    opacity: 0.5;
+}
+
+/* Check for all the classes in js that have to style */
