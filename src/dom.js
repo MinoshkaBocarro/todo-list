@@ -1,4 +1,4 @@
-import { manualMoveWithinProject, moveIntoProject, projectCreator, projectEditor, setDefault, todoCreator, todoEditor, updateCurrentProject } from "./app";
+import { manualMoveProject, manualMoveWithinProject, moveIntoProject, projectCreator, projectEditor, setDefault, todoCreator, todoEditor, updateCurrentProject } from "./app";
 import { createTodoForm } from "./create-todo-form";
 import { createProjectList } from "./create-project-list";
 import { createTodoList } from "./create-todo-list";
@@ -13,53 +13,8 @@ const todoArea = document.querySelector('.todo-area');
 
 //drag and drop
 todoArea.addEventListener('dragover', e => {
-    e.preventDefault();
-    const elementAbove = getElementAboveDraggable(e.y);
-    const space = document.createElement('div')
-    space.classList.add('space');
-    const draggable = document.querySelector('.dragging');
-    const itemToSortId = draggable.dataset.todoId;
-    const currentSpaces = document.querySelectorAll('.space')
-    if (elementAbove === undefined) {
-        manualMoveWithinProject(currentProject, itemToSortId);
-        if (currentSpaces.length > 0) {
-            currentSpaces.forEach(space => {
-                if (space !== space.parentNode.firstElementChild) {
-                    space.remove();
-                }
-            });
-        }
-        if (currentSpaces.length === 0) {
-            todoArea.prepend(space);
-        }
-    } else {
-        manualMoveWithinProject(currentProject, itemToSortId, elementAbove.dataset.todoId);
-        if (currentSpaces.length > 0) {
-            currentSpaces.forEach(space => {
-                if (space !== elementAbove.nextSibling) {
-                    space.remove();
-                }
-            });
-        }
-        if (currentSpaces.length === 0) {
-            elementAbove.after(space);
-        }
-    }
+    manualSorting(e, todoArea, "todo", "todo-id")
 });
-
-function getElementAboveDraggable(y) {
-    const otherDraggableElements = [...todoArea.querySelectorAll('.todo-item:not(.dragging)')];
-
-    return otherDraggableElements.reduce((closest, child) => {
-        const box = child.getBoundingClientRect();
-        const offset = y - box.top - box.height / 2;
-        if (offset > 0 && offset < closest.offset) {
-            return { offset: offset, element: child };
-        } else {
-            return closest
-        }
-    }, { offset: Number.POSITIVE_INFINITY }).element;
-}
 
 //todo functions
 function getTodoInfo(e) {
@@ -221,8 +176,6 @@ projectNameHolder.addEventListener('dblclick', () => {
 //project functions
 function renderCurrentProjectName() {
     projectNameHolder.textContent = currentProject.collectionName;
-    // console.log(currentProject.id)
-    // projectNameHolder.setAttribute('data-project-id', currentProject.id);
 }
 
 function loadProject() {
@@ -241,7 +194,14 @@ function renderProjectList() {
 
     projects.forEach(project => {
         project.addEventListener('click', projectCallback);
-    })
+        project.addEventListener('dragstart', () => {
+            project.classList.add('dragging');
+        });
+        project.addEventListener('dragend', () => {
+            project.classList.remove('dragging');
+            renderProjectList();
+        });
+    });
 }
 
 const completedProject = document.querySelector('.completed');
@@ -253,6 +213,11 @@ function projectCallback(e) {
     currentProject = updateCurrentProject(e.target.dataset.projectId);
     loadProject();
 }
+
+projectListHolder.addEventListener('dragover', e => {
+    manualSorting(e, projectListHolder, "project-list", "project-id");
+});
+
 
 const newProjectButton = document.querySelector('nav button');
 const newProjectFormDialog = document.querySelector("dialog.form");
@@ -275,6 +240,67 @@ confirmNewProjectButton.addEventListener('click', (e) => {
     newProjectForm.reset();
     renderProjectList();
 });
+
+//sorting
+
+function manualSorting(e, area, type, idType) {
+    e.preventDefault();
+    const elementAbove = getElementAboveDraggable(e.y, area);
+    const draggable = document.querySelector('.dragging');
+    const itemToSortId = draggable.getAttribute(`data-${idType}`);
+    const space = document.createElement('div');
+    space.classList.add('space');
+    const currentSpaces = document.querySelectorAll('.space');
+    let functionCall;
+    if (type === "todo") {
+        functionCall = function(originalPositionId, afterItemId) {
+            manualMoveWithinProject(originalPositionId, afterItemId);
+        }
+    } else {
+        functionCall = function(originalPositionId, afterItemId) {
+            manualMoveProject(originalPositionId, afterItemId);
+        }
+    }
+    if (elementAbove === undefined) {
+        functionCall(itemToSortId);
+        if (currentSpaces.length > 0) {
+            currentSpaces.forEach(space => {
+                if (space !== space.parentNode.firstElementChild) {
+                    space.remove()
+                }
+            });
+        }
+        if (currentSpaces.length === 0) {
+            area.prepend(space);
+        }
+    } else {
+        const elementAboveId = elementAbove.getAttribute(`data-${idType}`);
+        functionCall(itemToSortId, elementAboveId);
+        if (currentSpaces.length > 0) {
+            currentSpaces.forEach(space => {
+                if (space !== elementAbove.nextSibling) {
+                    space.remove()
+                }
+            });
+        }
+        if (currentSpaces.length === 0) {
+            elementAbove.after(space);
+        }
+    }
+}
+
+function getElementAboveDraggable(y, area) {
+    const otherDraggableElements = [...area.querySelectorAll('[draggable="true"]:not(.dragging)')];
+    return otherDraggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset > 0 && offset < closest.offset) {
+            return { offset: offset, element: child };
+        } else {
+            return closest
+        }
+    }, { offset: Number.POSITIVE_INFINITY }).element;
+}
 
 //context menu
 

@@ -11,6 +11,7 @@ function createProjectList() {
             //might have to add a class for styling the div as a whole
             project.textContent = item.item.collectionName;
             project.setAttribute("data-project-id", `${item.id}`);
+            project.setAttribute('draggable', 'true')
             projectListContainer.append(project);
         }
     });

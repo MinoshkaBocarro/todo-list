@@ -51,8 +51,12 @@ function updateCurrentProject(id) {
     return projectList.getCurrentProject();
 }
 
-function manualMoveWithinProject(currentProject, originalPositionId, afterItemId) {
-    currentProject.sortItemsManually(originalPositionId, afterItemId);
+function manualMoveWithinProject(originalPositionId, afterItemId) {
+    projectList.getCurrentProject().sortItemsManually(originalPositionId, afterItemId);
+}
+
+function manualMoveProject(originalPositionId, afterItemId) {
+    projectList.sortItemsManually(originalPositionId, afterItemId);
 }
 
 // const todoItemInfo =["Todo Title", "Todo Description", '2024-01-01', 'low', 'none'];
@@ -82,4 +86,4 @@ function manualMoveWithinProject(currentProject, originalPositionId, afterItemId
 "stop"
 
 
-export { setDefault, todoCreator, todoEditor, projectCreator, projectEditor, updateCurrentProject, moveIntoProject, manualMoveWithinProject }
+export { setDefault, todoCreator, todoEditor, projectCreator, projectEditor, updateCurrentProject, moveIntoProject, manualMoveWithinProject, manualMoveProject }
