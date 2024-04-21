@@ -59,6 +59,10 @@ function manualMoveProject(originalPositionId, afterItemId) {
     projectList.sortItemsManually(originalPositionId, afterItemId);
 }
 
+function sortItemsBy(currentProject, sortMethod) {
+    currentProject.sortBy(sortMethod);
+}
+
 // const todoItemInfo =["Todo Title", "Todo Description", '2024-01-01', 'low', 'none'];
 // const todoId = uuidv4();
 // const newProjectName = "New Project Name"
@@ -86,4 +90,4 @@ function manualMoveProject(originalPositionId, afterItemId) {
 "stop"
 
 
-export { setDefault, todoCreator, todoEditor, projectCreator, projectEditor, updateCurrentProject, moveIntoProject, manualMoveWithinProject, manualMoveProject }
+export { setDefault, todoCreator, todoEditor, projectCreator, projectEditor, updateCurrentProject, moveIntoProject, manualMoveWithinProject, manualMoveProject, sortItemsBy }

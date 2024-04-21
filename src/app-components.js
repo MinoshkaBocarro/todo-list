@@ -101,8 +101,8 @@ class Project extends Collection {
     sortBy(sortMethod) {
         if (sortMethod === "Alphabetical") {
             this.itemList.sort((firstTodo, secondTodo) => {
-                const firstTitle = firstTodo.title.toUpperCase();
-                const secondTitle = secondTodo.title.toUpperCase();
+                const firstTitle = firstTodo.item.title.toUpperCase();
+                const secondTitle = secondTodo.item.title.toUpperCase();
                 if (firstTitle < secondTitle) {
                     return -1;
                 }
@@ -113,7 +113,7 @@ class Project extends Collection {
             });
         } else if (sortMethod === "Due date") {
             this.itemList.sort((firstTodo, secondTodo) => {
-                compareAsc(firstTodo.dueDate, secondTodo.dueDate)
+                return compareAsc(firstTodo.item.dueDate, secondTodo.item.dueDate)
             });
         }
     }

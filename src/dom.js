@@ -1,4 +1,4 @@
-import { manualMoveProject, manualMoveWithinProject, moveIntoProject, projectCreator, projectEditor, setDefault, todoCreator, todoEditor, updateCurrentProject } from "./app";
+import { manualMoveProject, manualMoveWithinProject, moveIntoProject, projectCreator, projectEditor, setDefault, sortItemsBy, todoCreator, todoEditor, updateCurrentProject } from "./app";
 import { createTodoForm } from "./create-todo-form";
 import { createProjectList } from "./create-project-list";
 import { createTodoList } from "./create-todo-list";
@@ -8,7 +8,7 @@ import { createMoveMenu } from "./create-move-menu";
 let currentProject;
 
 //todos
-const newTodoItemButton = document.querySelector('.project-heading > button');
+const newTodoItemButton = document.querySelector('.project-heading > .add-todo-button');
 const todoArea = document.querySelector('.todo-area');
 
 //drag and drop
@@ -356,6 +356,26 @@ function showMoveMenu(e) {
         });
     });
 }
+
+//sort menu
+const sortMenuButton = document.querySelector('.sort-menu-button');
+const sortMenu = document.querySelector('.sort-menu ul')
+const sortMenuItems = document.querySelectorAll('.sort-menu li');
+
+sortMenuButton.addEventListener('click', () => {
+    sortMenu.style.display = "block";
+    //might want this as flex
+});
+
+sortMenuItems.forEach(item => {
+    item.addEventListener('click', e => {
+        sortItemsBy(currentProject, e.target.textContent)
+        renderTodoList();
+        sortMenu.style.display = "none";
+    })
+})
+
+//does current project in dom and in app components get updated properly??
 
 //on page load
 currentProject = setDefault();

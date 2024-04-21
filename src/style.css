@@ -69,4 +69,15 @@ article button {
     opacity: 0.5;
 }
 
+.sort-menu {
+    display: relative;
+}
+
+.sort-menu ul {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    border: black 1px solid;
+}
+
 /* Check for all the classes in js that have to style */
