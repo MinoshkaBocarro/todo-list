@@ -8,7 +8,7 @@ import { createMoveMenu } from "./create-move-menu";
 let currentProject;
 
 //todos
-const newTodoItemButton = document.querySelector('.project-heading > .add-todo-button');
+const newTodoItemButton = document.querySelector('.project-heading .add-todo-button');
 const todoArea = document.querySelector('.todo-area');
 
 //drag and drop
@@ -151,7 +151,7 @@ function renderTodoForm(type, id) {
 }
 
 //project
-const projectNameHolder = document.querySelector('.project-heading > h1');
+const projectNameHolder = document.querySelector('.project-heading h1');
 
 projectNameHolder.addEventListener('dblclick', () => {
     projectNameHolder.textContent = ""
