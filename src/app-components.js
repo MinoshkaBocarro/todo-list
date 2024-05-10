@@ -14,7 +14,8 @@ class TodoItem {
         this.priority = priority || "low";
         this.repeated = repeated;
         this.notes = notes;
-        this.checklist = checklist;
+        this.checklistOriginal = checklist;
+        this.checklistFormatted = checklist
     }
 
     set repeated(repeats) {
@@ -42,6 +43,10 @@ class TodoItem {
         }
         this.nextDueDate = format(nextDueDate, 'yyyy-MM-dd')
         return this._repeated = repeats;
+    }
+
+    set checklistFormatted(checklist) {
+        return this._checklistFormatted = checklist.split('\n')
     }
 }
 

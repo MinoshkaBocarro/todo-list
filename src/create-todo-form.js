@@ -17,6 +17,7 @@ function createTodoForm(type, todoId) {
         };
     } else if (type === "edit") {
        todoInfo = projectList.getCurrentProject().getItem(todoId);
+       console.log(todoInfo)
        form.setAttribute('data-todo-id', todoId);
     }
 
