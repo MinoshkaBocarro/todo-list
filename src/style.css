@@ -28,7 +28,6 @@ body {
 }
 
 .container {
-    border: 2px #D6AD29 solid;
     display: grid;
     grid-template-columns: 1fr 4fr;
     min-height: calc(100vh - 70px);
@@ -49,8 +48,8 @@ nav {
 
 article {
     display: grid;
-    grid-template-rows: 1fr 4fr;
-    border: 1px solid #D6AD29;
+    grid-template-rows: min-content 1fr;
+    border: 2px solid #D6AD29;
 }
 
 .project-heading {
@@ -60,6 +59,7 @@ article {
 
 .project-heading div {
     display: flex;
+    border-bottom: #D6AD29 solid 2px;
 }
 
 article h1 {
@@ -98,12 +98,31 @@ article button {
     font-weight: 600;
     padding: 7px 15px;
     color: #D6AD29;
-    background-color: transparent; /*#2951d6;*/
-    /* box-shadow: 3px 3px 11px 0px rgba(0,0,0,0.2);; */
+    background-color: transparent;
     border-color: #D6AD29;
     border-style: solid;
     border-right: 2px;
     border-top: 2px;
+}
+
+.workbook-area {
+    display: flex;
+    flex-direction: column;
+    border-left: #2952D6 solid 2px;
+    margin-left: 80px;
+}
+
+.sort-menu-container {
+    display: flex;
+}
+
+.sort-menu {
+    display: relative;
+    margin-left: auto;
+}
+
+ul {
+    margin: 0;
 }
 
 .sort-menu-button {
@@ -116,10 +135,12 @@ article button {
     border-style: solid;
     border-right: 2px;
     border-top: 2px;
+    margin-left: auto;
+    display: relative;
 }
 
-.sort-menu {
-    border-top: #D6AD29 solid 2px;
+.todo-item {
+    border-bottom: #2952D6 solid 1px;
 }
 
 .context-menu {
@@ -139,10 +160,6 @@ article button {
 
 .dragging {
     opacity: 0.5;
-}
-
-.sort-menu {
-    display: relative;
 }
 
 .sort-menu ul {
