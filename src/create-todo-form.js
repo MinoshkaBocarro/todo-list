@@ -17,7 +17,6 @@ function createTodoForm(type, todoId) {
         };
     } else if (type === "edit") {
        todoInfo = projectList.getCurrentProject().getItem(todoId);
-       console.log(todoInfo)
        form.setAttribute('data-todo-id', todoId);
     }
 
@@ -65,8 +64,9 @@ function createTodoForm(type, todoId) {
             const option = document.createElement('option');
             option.setAttribute('value', index.toLowerCase());
             option.textContent = index;
-            if(selected === option) {
-                option.setAttribute('selected');
+            if(selected === index.toLowerCase()) {
+                option.setAttribute('selected', 'selected');
+
             }
             select.append(option.cloneNode(true));
         });

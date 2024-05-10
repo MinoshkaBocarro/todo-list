@@ -122,11 +122,9 @@ function renderTodoForm(type, id) {
     } else if (type === "edit") {
         form = todoArea.querySelector('form')
         form.addEventListener("formdata", e => {
-            const todoId = e.target.formId;
-            if (currentProject.getItem(todoId) !== undefined) {
-                const todoItemInfo = getTodoInfo(e);
-                todoEditor(currentProject, todoId, ...todoItemInfo);
-            }
+            const todoId = e.target.dataset.todoId;
+            const todoItemInfo = getTodoInfo(e);
+            todoEditor(currentProject, todoId, ...todoItemInfo);
         });
     }
 

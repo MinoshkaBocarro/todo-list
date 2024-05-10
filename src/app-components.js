@@ -18,6 +18,10 @@ class TodoItem {
         this.checklistFormatted = checklist
     }
 
+    get repeated() {
+        return this._repeated
+    }
+
     set repeated(repeats) {
         if(repeats === "none") {
             return
@@ -42,7 +46,11 @@ class TodoItem {
             nextDueDate = addYears(dateToCompare, 1);
         }
         this.nextDueDate = format(nextDueDate, 'yyyy-MM-dd')
-        return this._repeated = repeats;
+        this._repeated = repeats;
+    }
+
+    get checklistFormatted() {
+        return this._checklistFormatted;
     }
 
     set checklistFormatted(checklist) {
