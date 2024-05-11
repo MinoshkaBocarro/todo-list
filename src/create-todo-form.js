@@ -96,7 +96,7 @@ function createTodoForm(type, todoId) {
     createSelect(label, "Priority:", "priority", ["Low", "Medium", "High"], todoInfo.priority);
     createSelect(label, "Repeat?", "repeated", ["None", "Daily", "Weekly", "Fortnightly", "Monthly", "Yearly"], todoInfo.repeated);
     createInput(label, "Notes:", "notes", "text", todoInfo.notes);
-    createTextArea(label, "Checklist (each list item on a new line)", "checklist", "5", "33", todoInfo.checklist)
+    createTextArea(label, "Checklist (each list item on a new line)", "checklist", "5", "33", todoInfo.checklistOriginal)
 
     form.append(ul);
 

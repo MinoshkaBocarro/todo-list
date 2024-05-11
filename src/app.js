@@ -36,6 +36,14 @@ function projectEditor(currentProject, newProjectName) {
     currentProject.collectionName = newProjectName;
 }
 
+
+function checkChecklistItem(currentProject, todoItemId, checklistIndex) {
+    const todoItem = currentProject.getItem(todoItemId);
+    const checkedStatus = todoItem.checklistCompleted[checklistIndex];
+    const newCheckedStatus = (checkedStatus === "unchecked") ? "checked" : "unchecked";
+    todoItem.checklistCompleted[checklistIndex] = newCheckedStatus;
+}
+
 function moveIntoProject(currentProject, itemId, destinationProjectId) {
    const itemToBeMoved = {
         item: currentProject.getItem(itemId),
@@ -90,4 +98,4 @@ function sortItemsBy(currentProject, sortMethod) {
 "stop"
 
 
-export { setDefault, todoCreator, todoEditor, projectCreator, projectEditor, updateCurrentProject, moveIntoProject, manualMoveWithinProject, manualMoveProject, sortItemsBy }
+export { setDefault, todoCreator, todoEditor, projectCreator, projectEditor, updateCurrentProject, moveIntoProject, manualMoveWithinProject, manualMoveProject, sortItemsBy, checkChecklistItem }

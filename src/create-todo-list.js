@@ -27,7 +27,35 @@ function createTodoList() {
         const viewButton = document.createElement('button');
         viewButton.textContent = "View";
 
-        itemContainer.append(title, dueDate, viewButton);
+        itemContainer.append(title, dueDate, viewButton)
+
+        // make sure doesn't pop up when checklist is 0
+        console.log(todo.checklistFormatted[0] !== "")
+        if (todo.checklistFormatted[0] !== "") {
+            const checklist = document.createElement('div');
+            const checklistName = document.createElement('div');
+            checklistName.textContent = "Checklist";
+            checklist.append(checklistName);
+            for (let i = 0; i < todo.checklistFormatted.length; i++) {
+                const li = document.createElement('li');
+                const input = document.createElement('input');
+                input.setAttribute('type', "checkbox");
+                input.setAttribute('id', i);
+                input.setAttribute('data-checklist-index', i);
+                input.classList.add('todo-checklist')
+                if (todo.checklistCompleted[i] === "checked") {
+                    input.setAttribute('checked', 'checked');
+                }
+                const label = document.createElement('label');
+                label.setAttribute('for', i);
+                label.textContent = todo.checklistFormatted[i];
+                li.append(input, label);
+                checklist.append(li);
+            }
+    
+            itemContainer.append(checklist);
+        }
+
         todoListContainer.append(itemContainer);
     })
 

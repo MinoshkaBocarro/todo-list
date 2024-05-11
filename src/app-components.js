@@ -2,6 +2,7 @@ const { compareAsc, isBefore, constructNow, addDays, format, addWeeks, addMonths
 
 class TodoItem {
     nextDueDate;
+    checklistCompleted = [];
 
     constructor(todoInfo) {
         this.populateTodoItem(todoInfo);
@@ -15,7 +16,8 @@ class TodoItem {
         this.repeated = repeated;
         this.notes = notes;
         this.checklistOriginal = checklist;
-        this.checklistFormatted = checklist
+        this.checklistFormatted = checklist;
+        this.checkThroughChecklist();
     }
 
     get repeated() {
@@ -54,7 +56,18 @@ class TodoItem {
     }
 
     set checklistFormatted(checklist) {
-        return this._checklistFormatted = checklist.split('\n')
+        this._checklistFormatted = checklist.split('\n');
+    }
+
+    checkThroughChecklist() {
+        if (this.checklistFormatted.length < this.checklistCompleted.length) {
+            this.checklistCompleted.splice(this.checklistFormatted.length)
+        }
+        for (let i = 0; i < this.checklistFormatted.length; i++) {
+            if (this.checklistCompleted[i] === undefined) {
+                this.checklistCompleted.push('unchecked');
+            }
+        }
     }
 }
 

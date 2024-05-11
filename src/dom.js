@@ -1,4 +1,4 @@
-import { manualMoveProject, manualMoveWithinProject, moveIntoProject, projectCreator, projectEditor, setDefault, sortItemsBy, todoCreator, todoEditor, updateCurrentProject } from "./app";
+import { checkChecklistItem, manualMoveProject, manualMoveWithinProject, moveIntoProject, projectCreator, projectEditor, setDefault, sortItemsBy, todoCreator, todoEditor, updateCurrentProject } from "./app";
 import { createTodoForm } from "./create-todo-form";
 import { createProjectList } from "./create-project-list";
 import { createTodoList } from "./create-todo-list";
@@ -52,6 +52,16 @@ function renderTodoList() {
             e.target.parentNode.classList.toggle('completed');
         })
     });
+
+    const todoChecklist = todoArea.querySelectorAll('.todo-checklist');
+
+    todoChecklist.forEach(checkbox => {
+        checkbox.addEventListener('change', (e) => {
+            const todoId = getTodoIdFromDom(e);
+            const index = e.target.dataset.checklistIndex;
+            checkChecklistItem(currentProject, todoId, index);
+        })
+    })
 
     const todoItem = todoArea.querySelectorAll('.todo-item');
     const contextMenu = document.querySelector('.context-menu');
