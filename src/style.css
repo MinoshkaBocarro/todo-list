@@ -111,6 +111,7 @@ article h1 {
     font-family: specialElite, 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 2.2rem;
     margin-left: 10px;
+    box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.18);
 }
 
 article h1:hover, button:hover {
@@ -127,16 +128,20 @@ article button {
     margin-left: auto;
 }
 
-.add-todo-button {
-    font-size: 1.4rem;
+.add-todo-button, .sort-menu-button {
     font-weight: 600;
     padding: 7px 15px;
-    color: #D6AD29;
     background-color: transparent;
     border-color: #D6AD29;
     border-style: solid;
     border-right: 2px;
     border-top: 2px;
+    box-shadow: 0px 3px 2px 0px rgba(0,0,0,0.18);
+}
+
+.add-todo-button {
+    font-size: 1.4rem;
+    color: #D6AD29;
 }
 
 .workbook-area {
@@ -157,14 +162,7 @@ article button {
 
 .sort-menu-button {
     font-size: 1.2rem;
-    font-weight: 600;
-    padding: 7px 15px;
     color: black;
-    background-color: transparent;
-    border-color: #D6AD29;
-    border-style: solid;
-    border-right: 2px;
-    border-top: 2px;
     margin-left: auto;
     display: relative;
 }
@@ -212,12 +210,12 @@ input[type="checkbox"].todo-checklist::before{
 
 .view-button {
     grid-area: view;
-    font-size: 1.4rem;
+    font-size: 1rem;
     font-weight: 600;
-    padding: 7px 15px;
-    color: #D6AD29;
+    padding: 4px 7px;
     background-color: transparent;
     border: 2px, #D6AD29, solid;
+    box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.18);
 }
 
 .checklist-section {
