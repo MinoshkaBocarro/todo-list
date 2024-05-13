@@ -73,9 +73,11 @@ function createTodoList() {
             }
             checklist.append(checklistUl);
 
-            itemContainer.append(checklist, viewButton);
+            itemContainer.append(checklist);
 
         }
+
+        itemContainer.append(viewButton);
         // if there are no checklists then set height to different height
 
         todoListContainer.append(itemContainer);
