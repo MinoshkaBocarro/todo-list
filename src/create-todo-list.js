@@ -20,6 +20,7 @@ function createTodoList() {
             completeButton.classList.add('complete-button')
             itemContainer.append(completeButton);
         }
+        // make sure to check it if it is a completed project
 
         const info = document.createElement('div');
         info.classList.add('info')
@@ -37,8 +38,10 @@ function createTodoList() {
 
         info.append(title, dueDate)
 
+        const separator = document.createElement('div');
+        separator.classList.add('separator');
 
-        itemContainer.append(info, viewButton)
+        itemContainer.append(info, separator)
 
         if (todo.checklistFormatted[0] !== "") {
             if(todo.checklistFormatted.length > 2) {
@@ -70,9 +73,10 @@ function createTodoList() {
             }
             checklist.append(checklistUl);
 
-            itemContainer.append(checklist);
+            itemContainer.append(checklist, viewButton);
 
         }
+        // if there are no checklists then set height to different height
 
         todoListContainer.append(itemContainer);
     })

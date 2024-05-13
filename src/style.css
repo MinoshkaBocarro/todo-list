@@ -45,7 +45,6 @@ input[type="checkbox"] {
     width: 1rem;
     height: 1rem;
     border: 0.15rem solid black;
-    border-radius: 0.15em;
     position: relative;
   }
 
@@ -53,6 +52,7 @@ input[type="checkbox"]::before {
     position: absolute;
     width: 0.55rem;
     height: 0.55rem;
+    border-radius: 10px;
     visibility: hidden;
 }
 
@@ -170,42 +170,66 @@ article button {
 .todo-item {
     border-bottom: #2952D6 solid 1px;
     display: grid;
-    grid-template-areas: "checkbox information"
-                            ". view"
-                            "arrow checklist";
-    grid-template-columns: min-content 1fr;
+    grid-template-areas: "checkbox information information"
+                            ". separator ."
+                            "arrow checklist view";
+    grid-template-columns: min-content 1fr min-content;
+    grid-template-rows: min-content min-content 1fr;
+    column-gap: 5px;
     justify-content: start;
-    height: 100px;
-    min-height: fit-content;
+    height: 85px;
+    min-width: max-content;
     font-size: 1.1rem;
+    margin: 8px;
+    padding-bottom: 8px;
 }
 
 .complete-button {
-    align-self: start;
-    margin-top: 2px;
+    top: 1px;
+    border-radius: 0.8rem;
 }
 
 input[type="checkbox"].complete-button::before{
-    box-shadow: inset 1rem 1rem #D6AD29;
-    content: "";
     left: 0.1rem;
     top: 0.1rem;
+    box-shadow: inset 1rem 1rem #D6AD29;
+    content: "";
+}
+
+input[type="checkbox"].todo-checklist{
+    border-radius: 0.15rem;
 }
 
 input[type="checkbox"].todo-checklist::before{
     content: "x";
     font-size: 1rem;
-    left: 0.1rem;
-    top: -0.2rem;
+    left: 0.12rem;
+    top: -0.25rem;
 }
 
 .info {
     grid-area: information;
     display: flex;
+    margin-bottom: 5px;
+}
+
+.title {
+    margin-right: 20px;
+}
+
+.checklist-section label{
+    margin-left: 4px;
 }
 
 .todo-item .due-date {
     margin-left: auto;
+}
+
+.separator {
+    grid-area: separator;
+    height: 0px;
+    width: 100px;
+    border: #2952D6 solid .5px;
 }
 
 .view-button {
@@ -214,24 +238,26 @@ input[type="checkbox"].todo-checklist::before{
     font-weight: 600;
     padding: 4px 7px;
     background-color: transparent;
-    border: 2px, #D6AD29, solid;
+    border: 2px #2952D6 solid;
     box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.18);
+    align-self: end;
 }
 
 .checklist-section {
     grid-area: checklist;
-    max-height: 3lh;
+    max-height: 2lh;
     overflow: auto;
-}
-
-input[type="checkbox"].complete-button::before{
-    box-shadow: inset 1rem 1rem #D6AD29;
-    content: "";
+    margin-top: 9px;
 }
 
 .todo-item img {
     align-self: start;
     grid-area: arrow;
+    margin-top: 10px;
+}
+
+.checklist-section li {
+    margin-top: 2px;
 }
 
 .context-menu {
