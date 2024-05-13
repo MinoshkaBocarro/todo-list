@@ -69,8 +69,8 @@ function renderTodoList() {
     todoItem.forEach(item => {
         item.addEventListener('contextmenu', e => {
             e.preventDefault();
-            const x = e.x;
-            const y = e.y;
+            const x = e.pageX;
+            const y = e.pageY;
             contextMenu.classList.add('show');
             contextMenu.setAttribute('data-todo-id', getTodoIdFromDom(e));
             //check this
@@ -87,14 +87,17 @@ function renderTodoList() {
     });
 
     document.addEventListener('click', e => {
-        if (!e.target.closest('.context-menu') /*|| !e.target.closest('.move')*/) {
-            //check this
+        if (!e.target.closest('.context-menu')) {
             closeMenus();
+        }
+        if (!e.target.closest('.sort-menu-button')) {
+            sortMenu.style.display = "none";
         }
     });
 
     window.addEventListener('resize', () => {
         closeMenus();
+        sortMenu.style.display = "none";
     });
 }
 
@@ -390,6 +393,8 @@ currentProject = setDefault();
 todoCreator(currentProject, undefined, "First Todo", "First Todo Description", "2023-08-01", "high", "daily", "First Todo Notes", "Check 1")
 todoCreator(currentProject, undefined, "Second Todo", "Second Todo Description", "2023-08-01", "low", "monthly", "Second Todo Notes", "Check 1\nCheck 2")
 todoCreator(currentProject, undefined, "Third Todo", "Third Todo Description", "2025-12-01", "high", "fortnightly", "Third Todo Notes", "Check 1\nCheck 2\nCheck 3")
+todoCreator(currentProject, undefined, "Fourth Todo", "Fourth Todo Description", "2024-08-01", "medium", "yearly", "Third Todo Notes", "")
+todoCreator(currentProject, undefined, "Fourth Todo", "Fourth Todo Description", "2024-08-01", "medium", "yearly", "Third Todo Notes", "")
 todoCreator(currentProject, undefined, "Fourth Todo", "Fourth Todo Description", "2024-08-01", "medium", "yearly", "Third Todo Notes", "")
 todoCreator(currentProject, undefined, "Fourth Todo", "Fourth Todo Description", "2024-08-01", "medium", "yearly", "Third Todo Notes", "")
 todoCreator(currentProject, undefined, "Fourth Todo", "Fourth Todo Description", "2024-08-01", "medium", "yearly", "Third Todo Notes", "")
