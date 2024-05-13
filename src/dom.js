@@ -387,6 +387,11 @@ sortMenuItems.forEach(item => {
 
 //on page load
 currentProject = setDefault();
+todoCreator(currentProject, undefined, "First Todo", "First Todo Description", "2023-08-01", "high", "daily", "First Todo Notes", "Check 1")
+todoCreator(currentProject, undefined, "Second Todo", "Second Todo Description", "2023-08-01", "low", "monthly", "Second Todo Notes", "Check 1\nCheck 2")
+todoCreator(currentProject, undefined, "Third Todo", "Third Todo Description", "2025-12-01", "high", "fortnightly", "Third Todo Notes", "Check 1\nCheck 2\nCheck 3")
+todoCreator(currentProject, undefined, "Fourth Todo", "Fourth Todo Description", "2024-08-01", "medium", "yearly", "Third Todo Notes", "")
 loadProject();
 renderProjectList();
+
 //remember to check how this works with storage

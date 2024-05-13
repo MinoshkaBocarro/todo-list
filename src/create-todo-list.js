@@ -1,4 +1,5 @@
 import { projectList } from "./app-components";
+import arrowImage from "./images/arrow.svg";
 
 function createTodoList() {
     const todoListContainer = document.createElement('div');
@@ -16,26 +17,41 @@ function createTodoList() {
         if(projectList.getCurrentProject().collectionName !== "Completed") {
             const completeButton = document.createElement('input');
             completeButton.setAttribute('type', 'checkbox');
+            completeButton.classList.add('complete-button')
             itemContainer.append(completeButton);
         }
 
+        const info = document.createElement('div');
+        info.classList.add('info')
+
         const title = document.createElement('div');
+        title.classList.add('title')
         title.textContent = todo.title;
         const dueDate = document.createElement('div');
+        dueDate.classList.add('due-date')
         dueDate.textContent = todo.dueDate;
 
         const viewButton = document.createElement('button');
+        viewButton.classList.add('view-button')
         viewButton.textContent = "View";
 
-        itemContainer.append(title, dueDate, viewButton)
+        info.append(title, dueDate)
 
-        // make sure doesn't pop up when checklist is 0
-        console.log(todo.checklistFormatted[0] !== "")
+
+        itemContainer.append(info, viewButton)
+
         if (todo.checklistFormatted[0] !== "") {
+            if(todo.checklistFormatted.length > 2) {
+                const arrow = document.createElement('img');
+                arrow.setAttribute('src', arrowImage)
+                arrow.style.height = '20px'
+                arrow.style.width = '18px'
+                itemContainer.append(arrow)
+            }
+    
             const checklist = document.createElement('div');
-            const checklistName = document.createElement('div');
-            checklistName.textContent = "Checklist";
-            checklist.append(checklistName);
+            checklist.classList.add('checklist-section')
+            const checklistUl = document.createElement('ul');
             for (let i = 0; i < todo.checklistFormatted.length; i++) {
                 const li = document.createElement('li');
                 const input = document.createElement('input');
@@ -50,10 +66,12 @@ function createTodoList() {
                 label.setAttribute('for', i);
                 label.textContent = todo.checklistFormatted[i];
                 li.append(input, label);
-                checklist.append(li);
+                checklistUl.append(li);
             }
-    
+            checklist.append(checklistUl);
+
             itemContainer.append(checklist);
+
         }
 
         todoListContainer.append(itemContainer);

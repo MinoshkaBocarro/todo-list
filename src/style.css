@@ -27,6 +27,40 @@ body {
     padding: 35px;
 }
 
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    font: inherit;
+    color: black;
+    width: 1rem;
+    height: 1rem;
+    border: 0.15rem solid black;
+    border-radius: 0.15em;
+    position: relative;
+  }
+
+input[type="checkbox"]::before {
+    position: absolute;
+    width: 0.55rem;
+    height: 0.55rem;
+    visibility: hidden;
+}
+
+
+input[type="checkbox"]:checked::before {
+    visibility: visible;
+}
+
 .container {
     display: grid;
     grid-template-columns: 1fr 4fr;
@@ -121,10 +155,6 @@ article button {
     margin-left: auto;
 }
 
-ul {
-    margin: 0;
-}
-
 .sort-menu-button {
     font-size: 1.2rem;
     font-weight: 600;
@@ -141,6 +171,69 @@ ul {
 
 .todo-item {
     border-bottom: #2952D6 solid 1px;
+    display: grid;
+    grid-template-areas: "checkbox information"
+                            ". view"
+                            "arrow checklist";
+    grid-template-columns: min-content 1fr;
+    justify-content: start;
+    height: 100px;
+    min-height: fit-content;
+    font-size: 1.1rem;
+}
+
+.complete-button {
+    align-self: start;
+    margin-top: 2px;
+}
+
+input[type="checkbox"].complete-button::before{
+    box-shadow: inset 1rem 1rem #D6AD29;
+    content: "";
+    left: 0.1rem;
+    top: 0.1rem;
+}
+
+input[type="checkbox"].todo-checklist::before{
+    content: "x";
+    font-size: 1rem;
+    left: 0.1rem;
+    top: -0.2rem;
+}
+
+.info {
+    grid-area: information;
+    display: flex;
+}
+
+.todo-item .due-date {
+    margin-left: auto;
+}
+
+.view-button {
+    grid-area: view;
+    font-size: 1.4rem;
+    font-weight: 600;
+    padding: 7px 15px;
+    color: #D6AD29;
+    background-color: transparent;
+    border: 2px, #D6AD29, solid;
+}
+
+.checklist-section {
+    grid-area: checklist;
+    max-height: 3lh;
+    overflow: auto;
+}
+
+input[type="checkbox"].complete-button::before{
+    box-shadow: inset 1rem 1rem #D6AD29;
+    content: "";
+}
+
+.todo-item img {
+    align-self: start;
+    grid-area: arrow;
 }
 
 .context-menu {
