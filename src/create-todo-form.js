@@ -102,7 +102,7 @@ function createTodoForm(type, todoId) {
     form.append(ul);
 
     const buttons = document.createElement('div');
-    buttons.classList.add('buttons');
+    buttons.classList.add('button-container');
 
     const cancelButton = document.createElement('button');
     cancelButton.setAttribute('value', 'cancel');

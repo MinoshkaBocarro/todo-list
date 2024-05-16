@@ -228,11 +228,11 @@ article button {
     gap: 10px
 }
 
-.new-todo-form .confirm {
+.confirm {
     margin-left: 10px;
 }
 
-.buttons {
+.button-container {
     display: flex;
     margin-top: 10px;
 }
