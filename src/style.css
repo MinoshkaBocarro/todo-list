@@ -69,6 +69,14 @@ input[type="text"], input[type="date"], select, textarea {
     padding-left: 5px;
 }
 
+
+button {
+    appearance: none;
+    background-color: #2951d69b;
+    border-style: none;  
+    box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.18);
+}
+
 .container {
     display: grid;
     grid-template-columns: 1fr 4fr;
@@ -78,6 +86,7 @@ input[type="text"], input[type="date"], select, textarea {
 nav {
    display: flex; 
    flex-direction: column;
+   font-size: 1.3rem;
 }
 
 .start {
@@ -86,6 +95,41 @@ nav {
 
 .end {
     margin-top: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.project {
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 10px;
+    padding: 15px 15px 10px 15px;
+    box-shadow: 0px 5px 15px 0px rgba(0,0,0,0.31);
+    font-family: specialElite;
+}
+
+.project:nth-child(4n+1){
+    background-color: #99E3FF;
+}
+
+.project:nth-child(4n+2){
+    background-color: #D1E0B7;
+}
+
+.project:nth-child(4n+3){
+    background-color: #FFC5D3;
+}
+
+.project:nth-child(4n+4){
+    background-color: #ffbda7;
+}
+
+.completed, .project:last-child {
+    box-shadow: 0px -5px 15px 0px rgba(0,0,0,0.1);
+}
+
+nav button {
+    margin-left: auto;
+    padding: 10px 20px;
 }
 
 article {
@@ -103,6 +147,25 @@ article {
 .project-heading div {
     display: flex;
     border-bottom: #D6AD29 solid 2px;
+}
+
+#project-name {
+    margin-left: 10px;
+}
+
+h2 {
+    margin: 0;
+}
+
+.project-heading input[type="text"] {
+    padding-top: 7px;
+    padding-left: 7px;
+    height: 30px;
+    width: 320px;
+}
+
+.project-heading form button {
+    height: 30px;
 }
 
 article h1 {
@@ -136,31 +199,9 @@ article h1 form {
     height: 40px;
 }
 
-#project-name {
-    margin-left: 10px;
-}
-
-h2 {
-    margin: 0;
-}
-
-.project-heading input[type="text"] {
-    padding-top: 7px;
-    padding-left: 7px;
-    height: 30px;
-}
-
-button {
-    appearance: none;
-    background-color: #2951d69b;
-    border-style: none;  
-    box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.18);
-}
-
 form button {
     border-radius: 5px; 
     color: white;
-    height: 30px;
     padding: 7px 10px;
 }
 
@@ -212,6 +253,9 @@ article button {
     display: relative;
 }
 
+.new-todo-form {
+    margin: 10px;
+}
 
 .new-todo-form h2 {
     margin-bottom: 10px;

@@ -399,6 +399,20 @@ todoCreator(currentProject, undefined, "Fourth Todo", "Fourth Todo Description",
 todoCreator(currentProject, undefined, "Fourth Todo", "Fourth Todo Description", "2024-08-01", "medium", "yearly", "Third Todo Notes", "")
 todoCreator(currentProject, undefined, "Fourth Todo", "Fourth Todo Description", "2024-08-01", "medium", "yearly", "Third Todo Notes", "")
 todoCreator(currentProject, undefined, "Fourth Todo", "Fourth Todo Description", "2024-08-01", "medium", "yearly", "Third Todo Notes", "")
+projectCreator("ProjectName1")
+projectCreator("fdgsdgdsgdfsg")
+projectCreator("grshfbfvcxzvbnhmk")
+projectCreator("fdgsdgdsgeui")
+projectCreator("gfhjgfdbnxmjh")
+projectCreator("ghfnggsfdbgh")
+projectCreator("ghjkl;oiu")
+projectCreator("ProjectName1")
+projectCreator("fdgsdgdsgdfsg")
+projectCreator("grshfbfvcxzvbnhmk")
+projectCreator("fdgsdgdsgeui")
+projectCreator("gfhjgfdbnxmjh")
+projectCreator("ghfnggsfdbgh")
+projectCreator("ghjkl;oiu")
 loadProject();
 renderProjectList();
 
