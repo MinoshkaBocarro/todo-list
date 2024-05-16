@@ -4,6 +4,7 @@ import { createProjectList } from "./create-project-list";
 import { createTodoList } from "./create-todo-list";
 import { createProjectForm } from "./edit-project-name-form";
 import { createMoveMenu } from "./create-move-menu";
+import { projectList } from "./app-components";
 
 let currentProject;
 
@@ -29,7 +30,6 @@ function getTodoInfo(e) {
 function getTodoIdFromDom(e) {
     return e.target.closest('[data-todo-id]').dataset.todoId;
 }
-
 
 function renderTodoList() {
     clearTodoArea();
@@ -64,7 +64,7 @@ function renderTodoList() {
     })
 
     const todoItem = todoArea.querySelectorAll('.todo-item');
-    const contextMenu = document.querySelector('.context-menu');
+    const contextMenu = document.querySelector('.context-menu.todo-menu');
 
     todoItem.forEach(item => {
         item.addEventListener('contextmenu', e => {
@@ -202,9 +202,21 @@ function renderProjectList() {
     projectListHolder.append(createProjectList());
 
     const projects = projectListHolder.querySelectorAll('.project');
+    const contextMenu = document.querySelector('.context-menu.project-menu')
 
     projects.forEach(project => {
         project.addEventListener('click', projectCallback);
+        project.addEventListener('contextmenu', e => {
+            e.preventDefault();
+            const x = e.pageX;
+            const y = e.pageY;
+            contextMenu.classList.add('show');
+            const id = e.target.dataset.projectId;
+            contextMenu.setAttribute('data-project-id', id);
+            //check this
+            contextMenu.style.top = `${y}px`
+            contextMenu.style.left = `${x}px`
+        });
         project.addEventListener('dragstart', () => {
             project.classList.add('dragging');
         });
@@ -316,7 +328,7 @@ function getElementAboveDraggable(y, area) {
 //context menu
 
 const menus = document.querySelectorAll('.menu');
-const contextMenu = document.querySelector('.context-menu');
+const todoContextMenu = document.querySelector('.context-menu.todo-menu');
 
 function closeMenus() {
     menus.forEach(menu => {
@@ -324,17 +336,30 @@ function closeMenus() {
         if (menu.classList.contains('move')) {
             moveOption.replaceChildren();
             moveOption.textContent = "Move Todo";
-            contextMenu.removeChild(menu)
+            todoContextMenu.removeChild(menu)
         }
     });
 }
 //not sold on this, check later
 
-const deleteOption = document.querySelector('.delete');
+const projectDeleteOption = document.querySelector('.project-menu .delete');
 
-deleteOption.addEventListener('click', e => {
+projectDeleteOption.addEventListener('click', e => {
     e.preventDefault();
+    const projectId = e.target.closest('[data-project-id]').dataset.projectId;
+    projectList.deleteItem(projectId);
+    //might put pop up "do you want to delete" here
+    closeMenus();
+    renderProjectList();
+})
+
+const todoDeleteOption = document.querySelector('.todo-menu .delete');
+
+todoDeleteOption.addEventListener('click', e => {
+    e.preventDefault();
+    console.log(e.target.closest['data-todo-id'])
     const todoId = getTodoIdFromDom(e);
+    console.log(todoId)
     currentProject.deleteItem(todoId);
     //might put pop up "do you want to delete" here
     closeMenus();
@@ -344,7 +369,7 @@ deleteOption.addEventListener('click', e => {
 const moveOption = document.querySelector('.move');
 
 moveOption.addEventListener('click', e => {
-    if (contextMenu.classList.contains('show')) {
+    if (todoContextMenu.classList.contains('show')) {
         showMoveMenu(e);
     }
 });
