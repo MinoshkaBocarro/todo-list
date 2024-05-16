@@ -54,6 +54,10 @@ function moveIntoProject(currentProject, itemId, destinationProjectId) {
    destinationProject.addItem(itemToBeMoved);
 }
 
+function rescheduleTodo(currentProject, todoItemId) {
+    currentProject.getItem(todoItemId).reschedule();
+}
+
 function updateCurrentProject(id) {
     projectList.setCurrentProject(id);
     return projectList.getCurrentProject();
@@ -71,4 +75,4 @@ function sortItemsBy(currentProject, sortMethod) {
     currentProject.sortBy(sortMethod);
 }
 
-export { setDefault, todoCreator, todoEditor, projectCreator, projectEditor, updateCurrentProject, moveIntoProject, manualMoveWithinProject, manualMoveProject, sortItemsBy, checkChecklistItem }
+export { setDefault, todoCreator, todoEditor, projectCreator, projectEditor, updateCurrentProject, moveIntoProject, manualMoveWithinProject, manualMoveProject, sortItemsBy, checkChecklistItem, rescheduleTodo }

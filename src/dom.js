@@ -1,4 +1,4 @@
-import { checkChecklistItem, manualMoveProject, manualMoveWithinProject, moveIntoProject, projectCreator, projectEditor, setDefault, sortItemsBy, todoCreator, todoEditor, updateCurrentProject } from "./app";
+import { checkChecklistItem, manualMoveProject, manualMoveWithinProject, moveIntoProject, projectCreator, projectEditor, rescheduleTodo, setDefault, sortItemsBy, todoCreator, todoEditor, updateCurrentProject } from "./app";
 import { createTodoForm } from "./create-todo-form";
 import { createProjectList } from "./create-project-list";
 import { createTodoList } from "./create-todo-list";
@@ -102,12 +102,17 @@ function renderTodoList() {
 }
 
 
-function checkForCompleted() {
+function checkCompleted() {
     const completedTodos = todoArea.querySelectorAll('.completed');
 
     completedTodos.forEach(todo => {
         const todoId = todo.dataset.todoId;
-        moveIntoProject(currentProject, todoId, "00000000-0000-0000-0000-000000000000");
+        const item = currentProject.getItem(todoId)
+        if(item.repeated !== "none") {
+            rescheduleTodo(currentProject, todoId)
+        } else {
+            moveIntoProject(currentProject, todoId, "00000000-0000-0000-0000-000000000000");
+        }
     });
 }
 
@@ -232,7 +237,7 @@ const completedProject = document.querySelector('.completed');
 completedProject.addEventListener('click', projectCallback);
 
 function projectCallback(e) {
-    checkForCompleted();
+    checkCompleted();
     currentProject = updateCurrentProject(e.target.dataset.projectId);
     loadProject();
 }

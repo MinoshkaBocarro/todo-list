@@ -26,6 +26,7 @@ class TodoItem {
 
     set repeated(repeats) {
         if(repeats === "none") {
+            this._repeated = repeats;
             return
         } 
         let dateToCompare;
@@ -68,6 +69,11 @@ class TodoItem {
                 this.checklistCompleted.push('unchecked');
             }
         }
+    }
+
+    reschedule() {
+        this.dueDate = this.nextDueDate;
+        this.repeated = this.repeated;
     }
 }
 
