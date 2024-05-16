@@ -3,13 +3,11 @@ import arrowImage from "./images/arrow.svg";
 
 function createTodoList() {
     const todoListContainer = document.createElement('div');
-    //might have to add a class for styling
 
     projectList.getCurrentProject().getItemList().forEach((item) => {
         const todo = item.item;
         const itemContainer = document.createElement('div');
         itemContainer.classList.add(todo.priority.toLowerCase());
-        // check this
         itemContainer.classList.add('todo-item');
         itemContainer.setAttribute('data-todo-id', item.id);
         itemContainer.setAttribute('draggable', 'true')
@@ -20,7 +18,6 @@ function createTodoList() {
             completeButton.classList.add('complete-button')
             itemContainer.append(completeButton);
         }
-        // make sure to check it if it is a completed project
 
         const info = document.createElement('div');
         info.classList.add('info')

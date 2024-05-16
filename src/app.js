@@ -71,31 +71,4 @@ function sortItemsBy(currentProject, sortMethod) {
     currentProject.sortBy(sortMethod);
 }
 
-// const todoItemInfo =["Todo Title", "Todo Description", '2024-01-01', 'low', 'none'];
-// const todoId = uuidv4();
-// const newProjectName = "New Project Name"
-// const projectId = uuidv4();
-// projectCreator(newProjectName, projectId)
-// projectList.setCurrentProject(projectId);
-// let currentProject = projectList.getCurrentProject();
-// todoCreator(currentProject, todoId, ...todoItemInfo);
-// projectEditor(currentProject, "Working Title")
-// const todoItemEdit = {title: "Totle", description: "Totion", dueDate: '2024-06-01', repeated: 'none'};
-// todoEditor(currentProject, todoId, todoItemEdit)
-// const projectId2 = uuidv4();
-// projectCreator("Destination", projectId2)
-// moveIntoProject(currentProject, todoId, projectId2)
-// todoCreator(currentProject, {title: "quarrel", description: "Todo Description", dueDate: '2024-01-01', repeated: 'none'})
-// todoCreator(currentProject, {title: "Jovial", description: "Todo Description", dueDate: '2023-01-01', repeated: 'none'})
-// todoCreator(currentProject, {title: "Jo Not", description: "Todo Description", dueDate: '2024-07-11', repeated: 'none'})
-// todoCreator(currentProject, {title: "Yanty", description: "Todo Description", dueDate: '2023-08-09', repeated: 'none'})
-// todoCreator(currentProject, {title: "Quarrel", description: "Todo Description", dueDate: '2024-07-11', repeated: 'none'})
-// todoCreator(currentProject, {title: "boris", description: "Todo Description", dueDate: '2023-08-01', repeated: 'none'})
-// currentProject.manualSort(3, 0);
-// projectList.sortProjects(1, 0)
-// currentProject.completeItem(0)
-// todoCreator(currentProject, {title: "boris", description: "Todo Description", dueDate: '2024-04-13', repeated: 'Yearly', priority: "high"})
-"stop"
-
-
 export { setDefault, todoCreator, todoEditor, projectCreator, projectEditor, updateCurrentProject, moveIntoProject, manualMoveWithinProject, manualMoveProject, sortItemsBy, checkChecklistItem }

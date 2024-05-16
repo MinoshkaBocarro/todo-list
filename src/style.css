@@ -107,23 +107,31 @@ nav {
     font-family: specialElite;
 }
 
-.project:nth-child(4n+1){
+.start .project:nth-child(4n+1){
     background-color: #99E3FF;
 }
 
-.project:nth-child(4n+2){
+.start .project:nth-child(4n+2){
     background-color: #D1E0B7;
 }
 
-.project:nth-child(4n+3){
+.start .project:nth-child(4n+3){
     background-color: #FFC5D3;
 }
 
-.project:nth-child(4n+4){
+.start .project:nth-child(4n+4){
     background-color: #ffbda7;
 }
 
-.completed, .project:last-child {
+.completed {
+    background-color: #d3c5ff;
+}
+
+.start .project:first-child {
+    box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.1);
+}
+
+.completed, .project:last-child:not(:first-child) {
     box-shadow: 0px -5px 15px 0px rgba(0,0,0,0.1);
 }
 

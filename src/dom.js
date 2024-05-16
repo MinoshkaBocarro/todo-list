@@ -357,9 +357,7 @@ const todoDeleteOption = document.querySelector('.todo-menu .delete');
 
 todoDeleteOption.addEventListener('click', e => {
     e.preventDefault();
-    console.log(e.target.closest['data-todo-id'])
     const todoId = getTodoIdFromDom(e);
-    console.log(todoId)
     currentProject.deleteItem(todoId);
     //might put pop up "do you want to delete" here
     closeMenus();
@@ -381,7 +379,6 @@ function showMoveMenu(e) {
     const y = e.y;
     e.target.append(createMoveMenu(x, y));
     const projects = document.querySelectorAll('.available-projects');
-    // check this
     projects.forEach(project => {
         project.addEventListener('click', () => {
             moveIntoProject(currentProject, todoId, project.dataset.projectId);
@@ -400,7 +397,6 @@ const sortMenuItems = document.querySelectorAll('.sort-menu li');
 
 sortMenuButton.addEventListener('click', () => {
     sortMenu.style.display = "block";
-    //might want this as flex
 });
 
 sortMenuItems.forEach(item => {
@@ -415,29 +411,6 @@ sortMenuItems.forEach(item => {
 
 //on page load
 currentProject = setDefault();
-todoCreator(currentProject, undefined, "First Todo", "First Todo Description", "2023-08-01", "high", "daily", "First Todo Notes", "Check 1")
-todoCreator(currentProject, undefined, "Second Todo", "Second Todo Description", "2023-08-01", "low", "monthly", "Second Todo Notes", "Check 1\nCheck 2")
-todoCreator(currentProject, undefined, "Third Todo", "Third Todo Description", "2025-12-01", "high", "fortnightly", "Third Todo Notes", "Check 1\nCheck 2\nCheck 3")
-todoCreator(currentProject, undefined, "Fourth Todo", "Fourth Todo Description", "2024-08-01", "medium", "yearly", "Third Todo Notes", "")
-todoCreator(currentProject, undefined, "Fourth Todo", "Fourth Todo Description", "2024-08-01", "medium", "yearly", "Third Todo Notes", "")
-todoCreator(currentProject, undefined, "Fourth Todo", "Fourth Todo Description", "2024-08-01", "medium", "yearly", "Third Todo Notes", "")
-todoCreator(currentProject, undefined, "Fourth Todo", "Fourth Todo Description", "2024-08-01", "medium", "yearly", "Third Todo Notes", "")
-todoCreator(currentProject, undefined, "Fourth Todo", "Fourth Todo Description", "2024-08-01", "medium", "yearly", "Third Todo Notes", "")
-todoCreator(currentProject, undefined, "Fourth Todo", "Fourth Todo Description", "2024-08-01", "medium", "yearly", "Third Todo Notes", "")
-projectCreator("ProjectName1")
-projectCreator("fdgsdgdsgdfsg")
-projectCreator("grshfbfvcxzvbnhmk")
-projectCreator("fdgsdgdsgeui")
-projectCreator("gfhjgfdbnxmjh")
-projectCreator("ghfnggsfdbgh")
-projectCreator("ghjkl;oiu")
-projectCreator("ProjectName1")
-projectCreator("fdgsdgdsgdfsg")
-projectCreator("grshfbfvcxzvbnhmk")
-projectCreator("fdgsdgdsgeui")
-projectCreator("gfhjgfdbnxmjh")
-projectCreator("ghfnggsfdbgh")
-projectCreator("ghjkl;oiu")
 loadProject();
 renderProjectList();
 

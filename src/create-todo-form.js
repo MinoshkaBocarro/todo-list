@@ -81,13 +81,11 @@ function createTodoForm(type, todoId) {
     
         label.setAttribute('for', id);
         label.textContent = labelText;
-        //Check how this works with breaks
         textArea.setAttribute('id', id);
         textArea.setAttribute('name', id);
         textArea.setAttribute('rows', rows);
         textArea.setAttribute('cols', columns);
         textArea.textContent = content;
-        //check this
         li.append(label, textArea);
         ul.append(li.cloneNode(true));
     }
