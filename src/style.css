@@ -61,10 +61,12 @@ input[type="checkbox"]:checked::before {
     visibility: visible;
 }
 
-input[type="text"]{
+input[type="text"], input[type="date"], select, textarea {
     appearance: none;
     border-radius: 10px;
     border: #9ea0a4 solid;
+    height: fit-content;
+    padding-left: 5px;
 }
 
 .container {
@@ -142,7 +144,7 @@ h2 {
     margin: 0;
 }
 
-h2 input[type="text"] {
+.project-heading input[type="text"] {
     padding-top: 7px;
     padding-left: 7px;
     height: 30px;
@@ -158,19 +160,12 @@ button {
 form button {
     border-radius: 5px; 
     color: white;
-    padding-top: 3px;
     height: 30px;
-    padding-top: 7px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 7px 10px;
 }
 
 article button {
     margin-left: auto;
-}
-
-h1 input {
-    min-width: none;;
 }
 
 .add-todo-button, .sort-menu-button {
@@ -197,6 +192,10 @@ h1 input {
     margin-left: 80px;
 }
 
+#title {
+    margin-left: 5px;
+}
+
 .sort-menu-container {
     display: flex;
 }
@@ -211,6 +210,35 @@ h1 input {
     color: black;
     margin-left: auto;
     display: relative;
+}
+
+
+.new-todo-form h2 {
+    margin-bottom: 10px;
+}
+
+.new-todo-form ul {
+    display: grid;
+    gap: 10px;
+}
+
+.new-todo-form li {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    gap: 10px
+}
+
+.new-todo-form .confirm {
+    margin-left: 10px;
+}
+
+.buttons {
+    display: flex;
+    margin-top: 10px;
+}
+
+button.cancel {
+    margin-left: auto;
 }
 
 .todo-item {
@@ -293,7 +321,7 @@ input[type="checkbox"].todo-checklist::before{
     grid-area: checklist;
     max-height: 2lh;
     overflow: auto;
-    margin-top: 9px;
+    margin-top: 5px;
 }
 
 .todo-item img {

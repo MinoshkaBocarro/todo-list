@@ -22,6 +22,7 @@ function createTodoForm(type, todoId) {
 
     form.setAttribute('action', '""');
     form.setAttribute('method', "post");
+    form.classList.add('new-todo-form');
 
     const titleContainer = document.createElement('h2');
     const titleLabel = document.createElement('label');
@@ -100,6 +101,9 @@ function createTodoForm(type, todoId) {
 
     form.append(ul);
 
+    const buttons = document.createElement('div');
+    buttons.classList.add('buttons');
+
     const cancelButton = document.createElement('button');
     cancelButton.setAttribute('value', 'cancel');
     cancelButton.setAttribute('class', 'cancel');
@@ -109,7 +113,9 @@ function createTodoForm(type, todoId) {
     confirmButton.setAttribute('class', 'confirm');
     confirmButton.textContent = "Done"
 
-    form.append(cancelButton, confirmButton);
+    buttons.append(cancelButton, confirmButton);
+
+    form.append(buttons);
 
     return form;
 }
