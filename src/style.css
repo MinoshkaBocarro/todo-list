@@ -61,6 +61,12 @@ input[type="checkbox"]:checked::before {
     visibility: visible;
 }
 
+input[type="text"]{
+    appearance: none;
+    border-radius: 10px;
+    border: #9ea0a4 solid;
+}
+
 .container {
     display: grid;
     grid-template-columns: 1fr 4fr;
@@ -83,6 +89,7 @@ nav {
 article {
     display: grid;
     grid-template-rows: min-content 1fr;
+    grid-template-columns: minmax(600px, 1fr);
     border: 2px solid #D6AD29;
 }
 
@@ -97,7 +104,6 @@ article {
 }
 
 article h1 {
-    /* Check this styling against the form version */
     display: inline-flex;
     border: solid #D6AD29 2px;
     border-top-left-radius: 4px;
@@ -119,16 +125,56 @@ article h1:hover, button:hover {
     outline: #D6AD29 solid;
 }
 
+article h1 form {
+    font-size: 1rem;
+    display: flex;
+    margin: 0;
+    height: 49px;
+    gap: 10px;
+    height: 40px;
+}
+
+#project-name {
+    margin-left: 10px;
+}
+
+h2 {
+    margin: 0;
+}
+
+h2 input[type="text"] {
+    padding-top: 7px;
+    padding-left: 7px;
+    height: 30px;
+}
+
 button {
     appearance: none;
-    height: fit-content;
+    background-color: #2951d69b;
+    border-style: none;  
+    box-shadow: 2px 2px 4px 0px rgba(0,0,0,0.18);
+}
+
+form button {
+    border-radius: 5px; 
+    color: white;
+    padding-top: 3px;
+    height: 30px;
+    padding-top: 7px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 article button {
     margin-left: auto;
 }
 
+h1 input {
+    min-width: none;;
+}
+
 .add-todo-button, .sort-menu-button {
+    height: fit-content;
     font-weight: 600;
     padding: 7px 15px;
     background-color: transparent;
