@@ -16,8 +16,8 @@ function populateProjectCollection(status) {
                 projectCreator(currentProjectInfo.item.collectionName, currentProjectInfo.id);
                 updateCurrentProject(projects[i].id);
                 const currentProject = projectList.getCurrentProject();
-                for (let i = 0; i < currentProjectInfo.item.itemList.length; i++) {
-                    const currentTodoInfo = currentProjectInfo.item.itemList[i]
+                for (let j = 0; j < currentProjectInfo.item.itemList.length; j++) {
+                    const currentTodoInfo = currentProjectInfo.item.itemList[j]
                     todoCreator(currentProject, currentTodoInfo.id, currentTodoInfo.item)
                 }
             }
