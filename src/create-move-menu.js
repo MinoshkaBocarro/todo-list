@@ -1,4 +1,4 @@
-import { projectList } from "./app-components";
+import { projectList } from "./app";
 
 function createMoveMenu(x, y) {
     const menuContainer = document.createElement('div');

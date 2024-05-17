@@ -1,5 +1,5 @@
 import { constructNow, format } from "date-fns";
-import { projectList } from "./app-components";
+import { projectList } from "./app";
 
 function createTodoForm(type, todoId) {
     const form = document.createElement('form');

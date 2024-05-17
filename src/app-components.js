@@ -8,16 +8,16 @@ class TodoItem {
         this.populateTodoItem(todoInfo);
     }
 
-    populateTodoItem({title, description, dueDate, priority, repeated, notes, checklist}) {
+    populateTodoItem({title, description, dueDate, priority, repeated, _repeated, notes, checklistOriginal, checklistCompleted}) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.priority = priority || "low";
-        this.repeated = repeated;
+        this.repeated = _repeated || repeated;
         this.notes = notes;
-        this.checklistOriginal = checklist;
-        this.checklistFormatted = checklist;
-        this.checkThroughChecklist();
+        this.checklistOriginal = checklistOriginal;
+        this.checklistFormatted = checklistOriginal;
+        this.checkThroughChecklist(checklistCompleted);
     }
 
     get repeated() {
@@ -60,13 +60,17 @@ class TodoItem {
         this._checklistFormatted = checklist.split('\n');
     }
 
-    checkThroughChecklist() {
-        if (this.checklistFormatted.length < this.checklistCompleted.length) {
-            this.checklistCompleted.splice(this.checklistFormatted.length)
-        }
-        for (let i = 0; i < this.checklistFormatted.length; i++) {
-            if (this.checklistCompleted[i] === undefined) {
-                this.checklistCompleted.push('unchecked');
+    checkThroughChecklist(checklistCompleted) {
+        if (checklistCompleted) {
+            this.checklistCompleted = checklistCompleted;
+        } else {
+            if (this.checklistFormatted.length < this.checklistCompleted.length) {
+                this.checklistCompleted.splice(this.checklistFormatted.length)
+            }
+            for (let i = 0; i < this.checklistFormatted.length; i++) {
+                if (this.checklistCompleted[i] === undefined) {
+                    this.checklistCompleted.push('unchecked');
+                }
             }
         }
     }
@@ -169,8 +173,4 @@ class ProjectList extends Collection {
     }
 }
 
-const projectList = new ProjectList("Project List");
-    //see how this works with storage
-
-
-export { projectList, Project, TodoItem}
+export { ProjectList, Project, TodoItem}

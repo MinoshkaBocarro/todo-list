@@ -1,4 +1,4 @@
-import { projectList } from "./app-components";
+import { projectList } from "./app";
 
 function createProjectList() {
     const projectListContainer = document.createElement('div');

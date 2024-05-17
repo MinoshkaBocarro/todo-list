@@ -1,4 +1,4 @@
-import { projectList } from "./app-components";
+import { projectList } from "./app";
 
 function createProjectForm() {
     const form = document.createElement('form');

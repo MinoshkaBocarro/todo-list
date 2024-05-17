@@ -1,4 +1,4 @@
-import { projectList } from "./app-components";
+import { projectList } from "./app";
 import arrowImage from "./images/arrow.svg";
 
 function createTodoList() {

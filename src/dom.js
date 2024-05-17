@@ -1,10 +1,9 @@
-import { checkChecklistItem, manualMoveProject, manualMoveWithinProject, moveIntoProject, projectCreator, projectEditor, rescheduleTodo, setDefault, sortItemsBy, todoCreator, todoEditor, updateCurrentProject } from "./app";
+import { checkChecklistItem, manualMoveProject, manualMoveWithinProject, moveIntoProject, populateProjectCollection, projectCreator, projectEditor, projectList, rescheduleTodo, setDefault, sortItemsBy, todoCreator, todoEditor, updateCurrentProject, updateStorage } from "./app";
 import { createTodoForm } from "./create-todo-form";
 import { createProjectList } from "./create-project-list";
 import { createTodoList } from "./create-todo-list";
 import { createProjectForm } from "./edit-project-name-form";
 import { createMoveMenu } from "./create-move-menu";
-import { projectList } from "./app-components";
 
 let currentProject;
 
@@ -60,6 +59,7 @@ function renderTodoList() {
             const todoId = getTodoIdFromDom(e);
             const index = e.target.dataset.checklistIndex;
             checkChecklistItem(currentProject, todoId, index);
+            updateStorage();
         })
     })
 
@@ -114,6 +114,8 @@ function checkCompleted() {
             moveIntoProject(currentProject, todoId, "00000000-0000-0000-0000-000000000000");
         }
     });
+
+    updateStorage();
 }
 
 function clearTodoArea() {
@@ -135,7 +137,8 @@ function renderTodoForm(type, id) {
         form = todoArea.querySelector('form');
         form.addEventListener("formdata", e => {
             const todoItemInfo = getTodoInfo(e);
-            todoCreator(currentProject, undefined, ...todoItemInfo);
+            todoCreator(currentProject, undefined, undefined, ...todoItemInfo);
+            updateStorage();
         });
     } else if (type === "edit") {
         form = todoArea.querySelector('form')
@@ -143,6 +146,7 @@ function renderTodoForm(type, id) {
             const todoId = e.target.dataset.todoId;
             const todoItemInfo = getTodoInfo(e);
             todoEditor(currentProject, todoId, ...todoItemInfo);
+            updateStorage();
         });
     }
 
@@ -154,6 +158,7 @@ function renderTodoForm(type, id) {
     })
         
     confirmButton.addEventListener("click", e => {
+        console.log(form)
         new FormData(form);
         todoFormReset(e);
     })
@@ -186,6 +191,7 @@ projectNameHolder.addEventListener('dblclick', () => {
     projectNameForm.addEventListener("formdata", e => {
         const newProjectName = e.formData.get("project-name");
         projectEditor(currentProject, newProjectName);
+        updateStorage();
     });
 });
 
@@ -239,6 +245,7 @@ completedProject.addEventListener('click', projectCallback);
 function projectCallback(e) {
     checkCompleted();
     currentProject = updateCurrentProject(e.target.dataset.projectId);
+    updateStorage();
     loadProject();
 }
 
@@ -259,6 +266,7 @@ newProjectButton.addEventListener('click', () => {
 newProjectForm.addEventListener('formdata', e => {
     const newProjectName = e.formData.get("project-name");
     projectCreator(newProjectName);
+    updateStorage();
 });
 
 confirmNewProjectButton.addEventListener('click', (e) => {
@@ -283,10 +291,12 @@ function manualSorting(e, area, type, idType) {
     if (type === "todo") {
         functionCall = function(originalPositionId, afterItemId) {
             manualMoveWithinProject(originalPositionId, afterItemId);
+            updateStorage();
         }
     } else {
         functionCall = function(originalPositionId, afterItemId) {
             manualMoveProject(originalPositionId, afterItemId);
+            updateStorage();
         }
     }
     if (elementAbove === undefined) {
@@ -387,6 +397,7 @@ function showMoveMenu(e) {
     projects.forEach(project => {
         project.addEventListener('click', () => {
             moveIntoProject(currentProject, todoId, project.dataset.projectId);
+            updateStorage();
             moveOption.replaceChildren();
             moveOption.textContent = "Move Todo";
             closeMenus();
@@ -407,15 +418,34 @@ sortMenuButton.addEventListener('click', () => {
 sortMenuItems.forEach(item => {
     item.addEventListener('click', e => {
         sortItemsBy(currentProject, e.target.textContent)
+        updateStorage();
         renderTodoList();
         sortMenu.style.display = "none";
     })
 })
 
+//update storage on page change 
+document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === "hidden") {
+        updateStorage();
+    }
+})
+
 //does current project in dom and in app components get updated properly??
 
 //on page load
-currentProject = setDefault();
+// console.log(JSON.parse(localStorage.getItem('projectList')))
+if (!localStorage.getItem('projectList')) {
+    populateProjectCollection('new');
+    currentProject = setDefault();
+    updateStorage();
+    console.log(projectList)
+} else {
+    populateProjectCollection('stored');
+    console.log(projectList)
+    currentProject = projectList.getCurrentProject();
+    console.log(projectList.getCurrentProject())
+}
 loadProject();
 renderProjectList();
 
