@@ -103,7 +103,7 @@ function renderTodoList() {
 
 
 function checkCompleted() {
-    const completedTodos = todoArea.querySelectorAll('.completed');
+    const completedTodos = todoArea.querySelectorAll('.completed.todo-item');
 
     completedTodos.forEach(todo => {
         const todoId = todo.dataset.todoId;

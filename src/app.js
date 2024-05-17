@@ -70,7 +70,6 @@ function projectEditor(currentProject, newProjectName) {
     currentProject.collectionName = newProjectName;
 }
 
-
 function checkChecklistItem(currentProject, todoItemId, checklistIndex) {
     const todoItem = currentProject.getItem(todoItemId);
     const checkedStatus = todoItem.checklistCompleted[checklistIndex];
